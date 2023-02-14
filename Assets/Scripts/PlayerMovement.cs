@@ -6,22 +6,37 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Vector2 movement;
+    [SerializeField] private float mSpeed = 5.0f;
+    
+    private Vector2 mMovement;
     private Rigidbody2D mRigid;
-    float mSpeed = 5.0f;
+    private Animator mAnimator;
     private void Awake()
     {
         mRigid= GetComponent<Rigidbody2D>();
+        mAnimator= GetComponent<Animator>();
     }
     private void OnMovement(InputValue value)
     {
-        movement = value.Get<Vector2>();
+        mMovement = value.Get<Vector2>();
+        if (mMovement.x != 0 || mMovement.y != 0)
+        {
+            mAnimator.SetFloat("X", mMovement.x);
+            mAnimator.SetFloat("Y", mMovement.y);
+
+            mAnimator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            mAnimator.SetBool("IsWalking", false);
+        }
+
     }
 
     private void FixedUpdate()
     {
-        // variant 1
-        // mRigid.MovePosition(mRigid.position + movement * mSpeed * Time.fixedDeltaTime);
+        //variant 1
+         mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.fixedDeltaTime);
 
         // varivant 2
         //if (movement.x != 0 || movement.y != 0)
@@ -30,6 +45,6 @@ public class PlayerMovement : MonoBehaviour
         //}
 
         // varivant 3
-        mRigid.AddForce(movement * mSpeed);
+        //mRigid.AddForce(movement * mSpeed);
     }
 }

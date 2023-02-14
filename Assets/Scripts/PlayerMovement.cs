@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 mMovement;
     private Rigidbody2D mRigid;
     private Animator mAnimator;
+    
+    public InteractionObject mInteractionObj = null;
+    public int mInteractionStep = -1;
+
     private void Awake()
     {
         mRigid= GetComponent<Rigidbody2D>();
@@ -47,4 +51,40 @@ public class PlayerMovement : MonoBehaviour
         // varivant 3
         //mRigid.AddForce(movement * mSpeed);
     }
+
+    public void SetInteractionObject(InteractionObject interactionObj, int interactionObjStep)
+    {
+        mInteractionObj = interactionObj;
+        mInteractionStep = interactionObjStep;
+
+
+    }
+
+    public void Interaction()
+    {
+        //ObjectType { None, Fishing, Mining, Gathering, Logging, Farming }
+       
+        switch (mInteractionObj.mType)
+        {
+            case InteractionObject.ObjectType.None:
+                return;
+            
+            case InteractionObject.ObjectType.Fishing: 
+
+            case InteractionObject.ObjectType.Mining:
+
+            case InteractionObject.ObjectType.Gathering:
+
+            case InteractionObject.ObjectType.Logging:
+
+            case InteractionObject.ObjectType.Farming:
+
+               
+                mAnimator.SetBool("IsFarming", true);
+                mAnimator.SetInteger("FarmLevel", mInteractionStep);
+                return;
+
+        }
+    }
+
 }

@@ -1195,8 +1195,8 @@ TextureImporter:
         y: 57
         width: 21
         height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1220,9 +1220,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       farm_35: -937469885
-      farm_53: 1284872390
       farm_5: -2065855538
-      farm_61: 58194586
       farm_6: 1664539081
       farm_49: 858040872
       farm_8: 281998645
@@ -1259,31 +1257,33 @@ TextureImporter:
       farm_4: -855073995
       farm_44: 1156651086
       farm_12: 1998615340
-      farm_46: 1265976855
       farm_50: -1107791893
+      farm_46: 1265976855
       farm_65: -1109354697
       farm_18: 105083840
       farm_48: 1296300975
+      farm_53: 1284872390
       farm_1: 163367148
-      farm_19: -668118127
       farm_0: -1594998219
+      farm_19: -668118127
+      farm_61: 58194586
+      farm_10: -1286697780
       farm_21: 1476352331
       farm_31: -2117344733
-      farm_10: -1286697780
       farm_17: 1273337597
-      farm_3: 656816749
       farm_45: -270232580
-      farm_33: 1999554176
+      farm_3: 656816749
       farm_2: 513060523
+      farm_33: 1999554176
       farm_56: 1107344018
-      farm_29: -289940625
-      farm_60: 635807782
       farm_37: -1523143356
-      farm_34: -1649052441
+      farm_29: -289940625
       farm_52: -1801726084
+      farm_60: 635807782
       farm_14: 2091675748
-      farm_42: -783563661
+      farm_34: -1649052441
       farm_25: -785971829
+      farm_42: -783563661
       farm_15: 964104061
   spritePackingTag: 
   pSDRemoveMatte: 0

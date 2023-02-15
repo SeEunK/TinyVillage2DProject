@@ -79,12 +79,41 @@ public class PlayerMovement : MonoBehaviour
 
             case InteractionObject.ObjectType.Farming:
 
+
+                //mAnimator.SetBool("IsFarming", true);
+                //mAnimator.SetInteger("FarmLevel", mInteractionStep);
+                if (mInteractionStep == 0)
+                {
+                    mAnimator.Play("FarmTree");
+                 
+                       ActionCheck();
+                    
+                }
+                if (mInteractionStep == 1)
+                {
+                    mAnimator.Play("FarmTree_2");
+                    
+                       ActionCheck();
+                    
+                }
+                if(mInteractionStep == 4)
+                {
+                    mAnimator.Play("FarmTree");
+
+                    ActionCheck();
+                }
                
-                mAnimator.SetBool("IsFarming", true);
-                mAnimator.SetInteger("FarmLevel", mInteractionStep);
-                return;
+
+                    return;
 
         }
     }
 
+
+    public void ActionCheck()
+    {
+       
+        mInteractionObj.UpdateState();
+    }
+ 
 }

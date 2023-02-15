@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator mAnimator;
     
     public InteractionObject mInteractionObj = null;
-    public int mInteractionStep = -1;
+    public FarmData.State mFarmObjectState = FarmData.State.None;
 
     private void Awake()
     {
@@ -52,10 +52,10 @@ public class PlayerMovement : MonoBehaviour
         //mRigid.AddForce(movement * mSpeed);
     }
 
-    public void SetInteractionObject(InteractionObject interactionObj, int interactionObjStep)
+    public void SetInteractionObject(InteractionObject interactionObj, FarmData.State state)
     {
         mInteractionObj = interactionObj;
-        mInteractionStep = interactionObjStep;
+        mFarmObjectState = state;
 
 
     }
@@ -82,29 +82,32 @@ public class PlayerMovement : MonoBehaviour
 
                 //mAnimator.SetBool("IsFarming", true);
                 //mAnimator.SetInteger("FarmLevel", mInteractionStep);
-                if (mInteractionStep == 0)
+                if (mFarmObjectState == FarmData.State.None)
                 {
                     mAnimator.Play("FarmTree");
-                 
-                       ActionCheck();
-                    
+
+                    ActionCheck();
+
                 }
-                if (mInteractionStep == 1)
+                else if (mFarmObjectState == FarmData.State.Base)
                 {
                     mAnimator.Play("FarmTree_2");
-                    
-                       ActionCheck();
-                    
+
+                    ActionCheck();
+
                 }
-                if(mInteractionStep == 4)
+                else if (mFarmObjectState == FarmData.State.Done)
                 {
                     mAnimator.Play("FarmTree");
 
                     ActionCheck();
                 }
-               
+                else
+                {
 
-                    return;
+                }
+
+                return;
 
         }
     }
@@ -112,8 +115,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActionCheck()
     {
-       
-        mInteractionObj.UpdateState();
+
+        if (mInteractionObj.mType == InteractionObject.ObjectType.Farming)
+        {
+            FarmObject farm = (FarmObject)mInteractionObj;
+            farm.UpdateState();
+               
+        }
     }
  
 }

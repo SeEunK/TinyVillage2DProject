@@ -39,29 +39,25 @@ public class UIManager : MonoBehaviour
     {
         mBtnFarmAction.SetActive(value);
     }
-    public void FarmActionButtonEnable(bool value,  int step)
+    public void UpdateActionButtonSprite(FarmData.State state)
     {
-        mBtnFarmAction.SetActive(value);
-
-        switch (step)
+        switch (state)
         {
-            case 0:
+            case FarmData.State.None:
                 // 빈 상태 -> 땅파기 
                 mBtnImage.color = Color.white;
                 mBtnImage.sprite = mIcoToolsSprites[0];
-                // 나중에 이미지 교체로 변경
                 break;
-            case 1:
+            case FarmData.State.Base:
                 // 파진 땅 --> 씨앗+물 
                 mBtnImage.color = Color.white;
                 mBtnImage.sprite = mIcoToolsSprites[1];
                 break;
-            case 2:
-            case 3:
+            case FarmData.State.Wait:
                 // 성장 대기 
                 mBtnImage.color = Color.red;
                 break;
-            case 4:
+            case FarmData.State.Done:
                 // 성장 종료, 수확 
                 mBtnImage.color = Color.white;
                 mBtnImage.sprite = mIcoToolsSprites[2];

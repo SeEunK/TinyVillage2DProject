@@ -37,10 +37,11 @@ public class FarmObject : InteractionObject
             GameObject playerObject = collision.gameObject;
             PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
 
-            player.SetInteractionObject(this,UserData.instance.mFarmDataList[mIndex].GetState());
+            player.SetInteractionObject(this);
+            //player.SetInteractionObject(this, UserData.instance.mFarmDataList[mIndex].GetState());
 
             UIManager.instance.SetFarmActionButton(true);
-            UIManager.instance.UpdateActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
+            UIManager.instance.UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
 
         }
     }
@@ -54,7 +55,9 @@ public class FarmObject : InteractionObject
             PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
 
             UIManager.instance.SetFarmActionButton(false);
-            player.SetInteractionObject(null, FarmData.State.None);
+
+            player.SetInteractionObject(null);
+           // player.SetInteractionObject(null, FarmData.State.None);
 
         }
     }
@@ -88,19 +91,19 @@ public class FarmObject : InteractionObject
         {
             case FarmData.State.None:
                 mRenderer.sprite = mSprites[0];
-                UIManager.instance.UpdateActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
+                UIManager.instance.UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
                 break;
             case FarmData.State.Base:
                 mRenderer.sprite = mSprites[1];
-                UIManager.instance.UpdateActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
+                UIManager.instance.UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
                 break;
             case FarmData.State.Wait:
                 mRenderer.sprite = mSprites[2];
-                UIManager.instance.UpdateActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
+                UIManager.instance.UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
                 break;
             case FarmData.State.Done:
                 mRenderer.sprite = mSprites[3];
-                UIManager.instance.UpdateActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
+                UIManager.instance.UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
                 break;
         }
     }

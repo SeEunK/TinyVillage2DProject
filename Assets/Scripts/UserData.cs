@@ -8,7 +8,7 @@ public class UserData : MonoBehaviour
 
     
     public List<FarmData> mFarmDataList = new List<FarmData>();
-
+    public List<FishingData> mFishingDataList = new List<FishingData>();
 
     private void Awake()
     {
@@ -33,8 +33,9 @@ public class UserData : MonoBehaviour
          for(int i= 0; i<6; i++)
         {
             mFarmDataList.Add(new FarmData());
-
         }
+
+         mFishingDataList.Add(new FishingData());
     }
 
 

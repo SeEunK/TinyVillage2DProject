@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     
     public InteractionObject mInteractionObj = null;
     public FarmData.State mFarmObjectState = FarmData.State.None;
+    public FishingData.State mFishingObjectState = FishingData.State.None;
 
     private void Awake()
     {
@@ -52,24 +53,42 @@ public class PlayerMovement : MonoBehaviour
         //mRigid.AddForce(movement * mSpeed);
     }
 
-    public void SetInteractionObject(InteractionObject interactionObj, FarmData.State state)
+    public void SetInteractionObject(InteractionObject interactionObj)
     {
         mInteractionObj = interactionObj;
-        mFarmObjectState = state;
 
+        if (interactionObj == null)
+        {
+            mFarmObjectState = FarmData.State.None;
+            mFishingObjectState = FishingData.State.None;
+            return;
+        }
+        
+        //mFarmObjectState = state;
+        switch (interactionObj.mType)
+        {
+            case InteractionObject.ObjectType.Farming:
+                FarmObject farm = (FarmObject)mInteractionObj;
+                mFarmObjectState = UserData.instance.mFarmDataList[farm.mIndex].GetState();
+
+                break;
+            case InteractionObject.ObjectType.Fishing:
+                FishingObject fishing = (FishingObject)mInteractionObj;
+                mFishingObjectState = UserData.instance.mFishingDataList[fishing.mIndex].GetState();
+                break;
+
+        }
 
     }
 
     public void Interaction()
     {
         //ObjectType { None, Fishing, Mining, Gathering, Logging, Farming }
-       
+
         switch (mInteractionObj.mType)
         {
             case InteractionObject.ObjectType.None:
                 return;
-            
-            case InteractionObject.ObjectType.Fishing: 
 
             case InteractionObject.ObjectType.Mining:
 
@@ -77,11 +96,32 @@ public class PlayerMovement : MonoBehaviour
 
             case InteractionObject.ObjectType.Logging:
 
+            case InteractionObject.ObjectType.Fishing:
+
+                if (mFishingObjectState == FishingData.State.None)
+                {
+                    mAnimator.Play("FishingTree_0"); // 낚시 던지기 
+
+                    ActionCheck();
+
+                }
+                else if (mFishingObjectState >= FishingData.State.Start)
+                {
+                    mAnimator.Play("FishingTree_1"); // 낚시대 땅기기 
+
+                    ActionCheck();
+
+                }
+                else
+                {
+                    /* nothing */
+                }
+
+                return;
+
+
             case InteractionObject.ObjectType.Farming:
 
-
-                //mAnimator.SetBool("IsFarming", true);
-                //mAnimator.SetInteger("FarmLevel", mInteractionStep);
                 if (mFarmObjectState == FarmData.State.None)
                 {
                     mAnimator.Play("FarmTree");
@@ -104,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-
+                    /* nothing */
                 }
 
                 return;
@@ -121,6 +161,25 @@ public class PlayerMovement : MonoBehaviour
             FarmObject farm = (FarmObject)mInteractionObj;
             farm.UpdateState();
                
+        }
+
+        if (mInteractionObj.mType == InteractionObject.ObjectType.Fishing)
+        {
+            FishingObject fishing = (FishingObject)mInteractionObj;
+
+            // FishingData.State state = UserData.instance.mFishingDataList[fishing.mIndex].GetState();
+
+            // start --> Bait 변경은 fish update 에서 시간 체크 후 자동으롷 addStep 해주는데, 액션 누른경우 낚시 캔슬 
+            //if (state == FishingData.State.Start)
+            //{
+            //    UserData.instance.mFishingDataList[fishing.mIndex].SetState(FishingData.State.None);
+            //    return;
+            //}
+
+
+            fishing.UpdateState();
+          
+
         }
     }
  

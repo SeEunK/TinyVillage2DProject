@@ -14,4 +14,9 @@ public class FarmActionButton : MonoBehaviour
     {
         player.Interaction();
     }
+
+    public void FishingAction()
+    {
+        player.Interaction();
+    }
 }

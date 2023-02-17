@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -15,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
     public InteractionObject mInteractionObj = null;
     public FarmData.State mFarmObjectState = FarmData.State.None;
     public FishingData.State mFishingObjectState = FishingData.State.None;
+
+    public ZoneData.Name mZoneName = ZoneData.Name.Field;
+    public ZoneData.Name mGoToZoneName = ZoneData.Name.Field;
 
     private void Awake()
     {
@@ -61,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         {
             mFarmObjectState = FarmData.State.None;
             mFishingObjectState = FishingData.State.None;
+            mZoneName = ZoneData.Name.Field;
             return;
         }
         
@@ -75,6 +80,11 @@ public class PlayerMovement : MonoBehaviour
             case InteractionObject.ObjectType.Fishing:
                 FishingObject fishing = (FishingObject)mInteractionObj;
                 mFishingObjectState = UserData.instance.mFishingDataList[fishing.mIndex].GetState();
+                break;
+
+            case InteractionObject.ObjectType.Doorway:
+                DoorwayObject door = (DoorwayObject)mInteractionObj;
+                mGoToZoneName = door.GetGoToZone();
                 break;
 
         }
@@ -96,6 +106,17 @@ public class PlayerMovement : MonoBehaviour
 
             case InteractionObject.ObjectType.Logging:
 
+            case InteractionObject.ObjectType.Doorway:
+                if(mGoToZoneName == ZoneData.Name.House)
+                {
+                    HouseSceneLoad();
+                }
+                if (mGoToZoneName == ZoneData.Name.Field)
+                {
+                    
+                    GameSceneLoad();
+                }
+                break;
             case InteractionObject.ObjectType.Fishing:
 
                 if (mFishingObjectState == FishingData.State.None)
@@ -151,8 +172,14 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
-
-
+    public void GameSceneLoad()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+    public void HouseSceneLoad()
+    {
+        SceneManager.LoadScene("HouseScene");
+    }
     public void ActionCheck()
     {
 

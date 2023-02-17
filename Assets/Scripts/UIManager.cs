@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     public GameObject mBtnFishingAction = null;
     public Image mImgFishingAction = null;
 
+    public GameObject mBtnDoorAction = null;
+    public Image mImgDoorAction = null;
+
     void Awake()
     {
         if(instance== null)
@@ -37,9 +40,25 @@ public class UIManager : MonoBehaviour
     {
         SetFarmActionButton(false);
         SetFishingActionButton(false);
+        SetDoorActionButton(false);
         mImgFarmAction = mBtnFarmAction.GetComponent<Image>();
         mImgFishingAction = mBtnFarmAction.GetComponent<Image>();
+        mImgDoorAction = mBtnDoorAction.GetComponent<Image>();
     }
+
+
+
+
+    public void SetDoorActionButton(bool value)
+    {
+        mBtnDoorAction.SetActive(value);
+    }
+    public void UpdateDoorActionButtonSprite()
+    {
+        mImgDoorAction.color = Color.yellow;
+        mImgDoorAction.sprite = mIcoToolsSprites[6]; // 문 이미지로 변경 필요
+    }
+
 
 
     public void SetFishingActionButton(bool value)
@@ -71,6 +90,7 @@ public class UIManager : MonoBehaviour
 
         }
     }
+
 
     public void SetFarmActionButton(bool value)
     {

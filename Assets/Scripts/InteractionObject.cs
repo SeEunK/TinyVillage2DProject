@@ -7,7 +7,7 @@ using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InteractionObject : MonoBehaviour
 {
-    public enum ObjectType { None, Fishing, Mining, Gathering, Logging, Farming }
+    public enum ObjectType { None, Fishing, Mining, Gathering, Logging, Farming ,Doorway}
 
     public ObjectType mType = ObjectType.None;
   
@@ -19,7 +19,7 @@ public class InteractionObject : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        
+   
     }
 
     public virtual void OnTriggerExit2D(Collider2D other)

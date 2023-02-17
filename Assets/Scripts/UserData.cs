@@ -9,6 +9,7 @@ public class UserData : MonoBehaviour
     
     public List<FarmData> mFarmDataList = new List<FarmData>();
     public List<FishingData> mFishingDataList = new List<FishingData>();
+    public List<ZoneData> mZoneList = new List<ZoneData>();
 
     private void Awake()
     {
@@ -36,6 +37,11 @@ public class UserData : MonoBehaviour
         }
 
          mFishingDataList.Add(new FishingData());
+
+        for (int i = 0; i < 2; i++)
+        {
+            mZoneList.Add(new ZoneData());
+        }
     }
 
 

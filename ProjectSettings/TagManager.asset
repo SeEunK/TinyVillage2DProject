@@ -9,6 +9,7 @@ TagManager:
   - Gather
   - Mining
   - Logging
+  - Door
   layers:
   - Default
   - TransparentFX

@@ -31,6 +31,9 @@ public class FishingObject : InteractionObject
         Init();
 
     }
+
+
+
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
@@ -40,7 +43,6 @@ public class FishingObject : InteractionObject
             PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
 
             player.SetInteractionObject(this);
-
             UIManager.instance.SetFishingActionButton(true);
             UIManager.instance.UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
 
@@ -59,6 +61,11 @@ public class FishingObject : InteractionObject
             player.SetInteractionObject(null);
 
         }
+    }
+
+    public int GetIndex()
+    {
+        return mIndex;
     }
 
     public void UpdateState()

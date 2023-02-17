@@ -19,4 +19,10 @@ public class FarmActionButton : MonoBehaviour
     {
         player.Interaction();
     }
+
+    public void DoorAction()
+    {
+        player.Interaction();
+    }
+
 }

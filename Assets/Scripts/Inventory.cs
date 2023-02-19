@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
     private List<Slot> mSlotList = new List<Slot>();
     private Slot[] mSlotArray = new Slot[INVEN_SlOT_MAX_COUNT];
 
-    private void Start()
+    private void Awake()
     {
         mHorizontalSlotCount = mInventoryGridLayoutGroup.constraintCount;
         mVerticalSlotCount = 4;
@@ -65,8 +65,6 @@ public class Inventory : MonoBehaviour
 
     private void InitSlots()
     {
-     
-
         for (int j = 0; j < mVerticalSlotCount; j++)
         {
 
@@ -86,7 +84,11 @@ public class Inventory : MonoBehaviour
             }
         }
 
-
     }
 
+
+    public void CloseInventory()
+    {
+        UIManager.instance.mInventroy.SetActive(false);
+    }
 }

@@ -10,6 +10,7 @@ TagManager:
   - Mining
   - Logging
   - Door
+  - Camera
   layers:
   - Default
   - TransparentFX

@@ -43,8 +43,8 @@ public class FishingObject : InteractionObject
             PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
 
             player.SetInteractionObject(this);
-            UIManager.instance.SetFishingActionButton(true);
-            UIManager.instance.UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
+            UIManager.instance.SetActionButton(true);
+            UIManager.instance.GetMainHud().UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
 
         }
     }
@@ -57,7 +57,7 @@ public class FishingObject : InteractionObject
             GameObject playerObject = other.gameObject;
             PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
 
-            UIManager.instance.SetFishingActionButton(false);
+            UIManager.instance.SetActionButton(false);
             player.SetInteractionObject(null);
 
         }
@@ -126,15 +126,15 @@ public class FishingObject : InteractionObject
             case FishingData.State.None:
                 Init();
                 mRenderer.sprite = mSprites[0];
-                UIManager.instance.UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
+                UIManager.instance.GetMainHud().UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
                 break;
             case FishingData.State.Start:
                 mRenderer.sprite = mSprites[1];
-                UIManager.instance.UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
+                UIManager.instance.GetMainHud().UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
                 break;
             case FishingData.State.Bait:
                 mRenderer.sprite = mSprites[2];
-                UIManager.instance.UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
+                UIManager.instance.GetMainHud().UpdateFishingActionButtonSprite(UserData.instance.mFishingDataList[mIndex].GetState());
                 break;
     
         }

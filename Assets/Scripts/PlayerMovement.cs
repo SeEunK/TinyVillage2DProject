@@ -7,6 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance;
+
+    public enum State { None, Active }
+    public enum Direction { Left, Right, Up , Down}
+    public State mState = State.None;
+    
+
     [SerializeField] private float mSpeed = 5.0f;
     
     private Vector2 mMovement;
@@ -22,16 +29,49 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        mRigid= GetComponent<Rigidbody2D>();
-        mAnimator= GetComponent<Animator>();
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
+            mRigid = GetComponent<Rigidbody2D>();
+            mAnimator = GetComponent<Animator>();
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+    }
+  
+
+    public void SetState(State state)
+    {
+        mState = state;
     }
     private void OnMovement(InputValue value)
     {
         mMovement = value.Get<Vector2>();
         if (mMovement.x != 0 || mMovement.y != 0)
         {
-            mAnimator.SetFloat("X", mMovement.x);
-            mAnimator.SetFloat("Y", mMovement.y);
+            if(mMovement.x < 0.0f)
+            {
+                SetDirection(Direction.Left);
+            }
+            else if(mMovement.x > 0.0f)
+            {
+                SetDirection(Direction.Right);
+            }
+            if(mMovement.y < 0.0f)
+            {
+                SetDirection(Direction.Down);
+            }
+            else if (mMovement.y > 0.0f)
+            {
+                SetDirection(Direction.Up);
+            }
+            //mAnimator.SetFloat("X", mMovement.x);
+            //mAnimator.SetFloat("Y", mMovement.y);
 
             mAnimator.SetBool("IsWalking", true);
         }
@@ -42,10 +82,37 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void SetDirection(Direction value)
+    {
+        switch (value)
+        {
+            case Direction.Down:
+                mAnimator.SetFloat("Y", -1.0f);
+                mAnimator.SetFloat("X", 0.0f);
+                break;
+            case Direction.Up:
+                mAnimator.SetFloat("Y", 1.0f);
+                mAnimator.SetFloat("X", 0.0f);
+                break;
+            case Direction.Left:
+                mAnimator.SetFloat("X", -1.0f);
+                mAnimator.SetFloat("Y", 0.0f);
+                break;
+            case Direction.Right:
+                mAnimator.SetFloat("X", 1.0f);
+                mAnimator.SetFloat("Y", 0.0f);
+                break;
+        }
+    }
+
     private void FixedUpdate()
     {
+        if (mState == State.None)
+        {
+            return;
+        }
         //variant 1
-         mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.fixedDeltaTime);
+        mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.fixedDeltaTime);
 
         // varivant 2
         //if (movement.x != 0 || movement.y != 0)
@@ -109,12 +176,12 @@ public class PlayerMovement : MonoBehaviour
             case InteractionObject.ObjectType.Doorway:
                 if(mGoToZoneName == ZoneData.Name.House)
                 {
-                    HouseSceneLoad();
+                     GameManager.Instance.HouseSceneLoad();
                 }
                 if (mGoToZoneName == ZoneData.Name.Field)
                 {
-                    
-                    GameSceneLoad();
+
+                    GameManager.Instance.GameSceneLoad();
                 }
                 break;
             case InteractionObject.ObjectType.Fishing:

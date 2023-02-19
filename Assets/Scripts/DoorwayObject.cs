@@ -23,8 +23,8 @@ public class DoorwayObject : InteractionObject {
             PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
 
             player.SetInteractionObject(this);
-            UIManager.instance.SetDoorActionButton(true);
-            UIManager.instance.UpdateDoorActionButtonSprite();
+            UIManager.instance.SetActionButton(true);
+            UIManager.instance.GetMainHud(). UpdateDoorActionButtonSprite();
 
         }
     }
@@ -37,7 +37,7 @@ public class DoorwayObject : InteractionObject {
             GameObject playerObject = other.gameObject;
             PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
 
-            UIManager.instance.SetDoorActionButton(false);
+            UIManager.instance.SetActionButton(false);
             player.SetInteractionObject(null);
 
         }

@@ -20,6 +20,10 @@ public class UIManager : MonoBehaviour
     public GameObject mBtnDoorAction = null;
     public Image mImgDoorAction = null;
 
+
+    public GameObject mBtnInventory = null;
+    public GameObject mInventroy = null;
+
     void Awake()
     {
         if(instance== null)
@@ -41,12 +45,17 @@ public class UIManager : MonoBehaviour
         SetFarmActionButton(false);
         SetFishingActionButton(false);
         SetDoorActionButton(false);
+        SetInventoryUI(false);
         mImgFarmAction = mBtnFarmAction.GetComponent<Image>();
         mImgFishingAction = mBtnFarmAction.GetComponent<Image>();
         mImgDoorAction = mBtnDoorAction.GetComponent<Image>();
+
     }
 
-
+    public void SetInventoryUI(bool value)
+    {
+        mInventroy.SetActive(value);
+    }
 
 
     public void SetDoorActionButton(bool value)

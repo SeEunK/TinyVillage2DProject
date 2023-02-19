@@ -75,6 +75,10 @@ public class FarmObject : InteractionObject
         }
         if (UserData.instance.mFarmDataList[mIndex].GetState() == FarmData.State.Done)
         {
+            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+            Sprite itemIcon = itemImages[13];
+            ItemData getItem = new ItemData(1,"¹«", itemIcon,  99);
+            UserData.instance.AddItem(getItem);
             AddStep();
             Init();
         }

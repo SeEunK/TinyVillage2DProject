@@ -7,7 +7,7 @@ using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InteractionObject : MonoBehaviour
 {
-    public enum ObjectType { None, Fishing, Mining, Gathering, Logging, Farming ,Doorway}
+    public enum ObjectType { None, Fishing, Mining, Gathering, Logging, Farming ,Doorway, Npc}
 
     public ObjectType mType = ObjectType.None;
   

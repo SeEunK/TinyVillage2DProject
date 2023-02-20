@@ -11,6 +11,7 @@ TagManager:
   - Logging
   - Door
   - Camera
+  - NPC
   layers:
   - Default
   - TransparentFX

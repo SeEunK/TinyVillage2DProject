@@ -16,13 +16,15 @@ public class MainHUD: MonoBehaviour
     private void Awake()
     {
 
-        mImgAction = mBtnAction.GetComponent<Image>();
+        mImgAction = mBtnAction.transform.Find("ImgActionIcon").GetComponent<Image>();
+           
        
     }
 
     public void SetActionButton(bool value)
     {
         mBtnAction.SetActive(value);
+       // mImgAction.enabled = value;
     }
 
     public void SetInventoryButton(bool value)
@@ -30,9 +32,16 @@ public class MainHUD: MonoBehaviour
         mBtnInventory.SetActive(value);
     }
 
+
+    public void UpdateNPCActionButtonSprite()
+    {
+        mBtnAction.GetComponent<Image>().color = Color.white;
+        mImgAction.sprite = mIcoToolsSprites[7];
+    }
+
     public void UpdateDoorActionButtonSprite()
     {
-        mImgAction.color = Color.yellow;
+        mBtnAction.GetComponent<Image>().color = Color.white;
         mImgAction.sprite = mIcoToolsSprites[6];
     }
 
@@ -42,18 +51,18 @@ public class MainHUD: MonoBehaviour
         {
             case FishingData.State.None:
                 // 빈 상태 ->낚시줄 던지기
-                mImgAction.color = Color.white;
+                mBtnAction.GetComponent<Image>().color = Color.white;
                 mImgAction.sprite = mIcoToolsSprites[5];
                 break;
             case FishingData.State.Start:
                 // 낚시줄 던진 상태 . 낚기 (회수)
-                mImgAction.color = Color.red;
+                mBtnAction.GetComponent<Image>().color = Color.red;
                 mImgAction.sprite = mIcoToolsSprites[5];
                 break;
             case FishingData.State.Bait:
                 // 물었음. 낚기 
 
-                mImgAction.color = Color.blue;
+                mBtnAction.GetComponent<Image>().color = Color.blue;
                 mImgAction.sprite = mIcoToolsSprites[5];
                 break;
 

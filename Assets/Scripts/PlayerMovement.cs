@@ -173,6 +173,11 @@ public class PlayerMovement : MonoBehaviour
 
             case InteractionObject.ObjectType.Logging:
 
+            case InteractionObject.ObjectType.Npc:
+                ActionCheck();
+
+                break;
+
             case InteractionObject.ObjectType.Doorway:
                 if(mGoToZoneName == ZoneData.Name.House)
                 {
@@ -270,10 +275,15 @@ public class PlayerMovement : MonoBehaviour
             //    return;
             //}
 
-
             fishing.UpdateState();
-          
 
+        }
+
+        if (mInteractionObj.mType == InteractionObject.ObjectType.Npc)
+        {
+           NpcObject npc = (NpcObject)mInteractionObj;
+
+           npc.UpdateState();
         }
     }
  

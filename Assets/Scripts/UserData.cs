@@ -13,6 +13,8 @@ public class UserData : MonoBehaviour
 
     public List<ItemData> mItemDataList = new List<ItemData>();
 
+
+
     private void Awake()
     {
         if (instance == null)
@@ -93,4 +95,8 @@ public class UserData : MonoBehaviour
     {
         return mItemDataList;
     }
+
+
+
+
 }

@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
   
     public GameObject mInventroy = null;
     private MainHUD mMainHUD = null;
+    private NpcShop mNpcShop = null;
 
     void Awake()
     {
@@ -36,11 +37,21 @@ public class UIManager : MonoBehaviour
 
         GameObject mainHUD = this.transform.Find("MainHUD").gameObject;
         mMainHUD = mainHUD.GetComponent<MainHUD>();
-        
+
+        GameObject shopUI = this.transform.Find("NpcShop").gameObject;
+        mNpcShop = shopUI.GetComponent<NpcShop>();
+        mNpcShop.SetShopContents();
+
         SetActionButton(false);
         SetInventoryUI(false);
         SetInventoryButton(false);
+        SetNpcShopPopupUI(false); 
 
+    }
+
+    public void SetNpcShopPopupUI(bool value)
+    {
+        mNpcShop.SetPopupActive(value);
     }
 
     public void SetInventoryUI(bool value)
@@ -57,7 +68,10 @@ public class UIManager : MonoBehaviour
         mMainHUD.SetInventoryButton(value);
     }
 
-   
+   public NpcShop GetNpcShop()
+    {
+        return mNpcShop;
+    }
 
     public MainHUD GetMainHud()
     {

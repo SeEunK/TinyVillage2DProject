@@ -5,6 +5,7 @@ using UnityEngine;
 public class NpcObject : InteractionObject
 {
     private Animator mAnimator;
+    
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class NpcObject : InteractionObject
         base.OnTriggerEnter2D(collision);
         if (collision.CompareTag("Player"))
         {
+            this.transform.GetComponent<NpcMovement>().Pause();
             //npc move stop
             mAnimator.SetBool("IsMove", false);
             mAnimator.SetBool("IsInteraction", true);
@@ -43,6 +45,7 @@ public class NpcObject : InteractionObject
         base.OnTriggerExit2D(other);
         if (other.CompareTag("Player"))
         {
+            this.transform.GetComponent<NpcMovement>().Resume();
             //npc move 
             mAnimator.SetBool("IsInteraction", false);
             mAnimator.SetBool("IsMove", true);
@@ -61,5 +64,6 @@ public class NpcObject : InteractionObject
         UIManager.instance.SetNpcShopPopupUI(true);
         Debug.Log("npc interaction action : UpdateState");
     }
+
 
 }

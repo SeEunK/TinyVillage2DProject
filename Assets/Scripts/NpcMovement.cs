@@ -11,7 +11,15 @@ public class NpcMovement : MonoBehaviour
     private Rigidbody2D mRigidbody;
     public bool isMove = false;
 
-    private Vector3 mPrevPos;
+    [SerializeField]
+    private Collider2D mMoveZone;
+    [SerializeField]
+    private Vector2 mMinMovePoint;
+    [SerializeField]
+    private Vector2 mMaxMovePoint;
+    [SerializeField]
+    private bool mHasMoveZone = false;
+
     [SerializeField]
     private float mMoveTime = 3.0f;
     [SerializeField]
@@ -27,14 +35,22 @@ public class NpcMovement : MonoBehaviour
 
     private void Start()
     {
+        mMoveZone = GameObject.Find("MoveZone").GetComponent<Collider2D>();
         mRigidbody= GetComponent<Rigidbody2D>();
         mAnimator = GetComponent<Animator>();
         
         mMoveSpeed = 3.0f;
         mMoveTimer = mMoveTime;
         mWaitTimer = mWaitTime;
-        mPrevPos = transform.position;
+        
         mIsPause = false;
+
+        if (mMoveZone != null)
+        {
+            mMinMovePoint = mMoveZone.bounds.min;
+            mMaxMovePoint = mMoveZone.bounds.max;
+            mHasMoveZone = true;
+        }
     }
 
     private void Update()
@@ -51,24 +67,47 @@ public class NpcMovement : MonoBehaviour
                 {
                     case Direction.Up:
                         mRigidbody.velocity = new Vector2(0, mMoveSpeed);
-
                         SetDirection(mDirection);
+                       
+                        if(mHasMoveZone && transform.position.y >= mMaxMovePoint.y)
+                        {
+                            mAnimator.SetBool("IsMove", false);
+                            isMove = false;
+                            mWaitTimer = mWaitTime;
+                        }
                         break;
                     case Direction.Down:
-
                         mRigidbody.velocity = new Vector2(0, -mMoveSpeed);
-
                         SetDirection(mDirection);
+                        
+                        if (mHasMoveZone && transform.position.y <= mMinMovePoint.y)
+                        {
+                            mAnimator.SetBool("IsMove", false);
+                            isMove = false;
+                            mWaitTimer = mWaitTime;
+                        }
                         break;
                     case Direction.Left:
-
                         mRigidbody.velocity = new Vector2(-mMoveSpeed, 0);
                         SetDirection(mDirection);
+
+                        if (mHasMoveZone && transform.position.x <= mMinMovePoint.x)
+                        {
+                            mAnimator.SetBool("IsMove", false);
+                            isMove = false;
+                            mWaitTimer = mWaitTime;
+                        }
                         break;
                     case Direction.Right:
-
                         mRigidbody.velocity = new Vector2(mMoveSpeed, 0);
                         SetDirection(mDirection);
+
+                        if (mHasMoveZone && transform.position.x >= mMaxMovePoint.x)
+                        {
+                            mAnimator.SetBool("IsMove", false);
+                            isMove = false;
+                            mWaitTimer = mWaitTime;
+                        }
                         break;
 
                 }

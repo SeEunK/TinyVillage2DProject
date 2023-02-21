@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,17 +10,18 @@ public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance;
 
-    public enum State { None, Active }
-    public enum Direction { Left, Right, Up , Down}
+    public enum State { None, Active, Attack }
+    public enum Direction { Left, Right, Up, Down }
     public State mState = State.None;
-    
+    public Direction mDirection = Direction.Down;
+
 
     [SerializeField] private float mSpeed = 5.0f;
-    
+
     private Vector2 mMovement;
     private Rigidbody2D mRigid;
     private Animator mAnimator;
-    
+
     public InteractionObject mInteractionObj = null;
     public FarmData.State mFarmObjectState = FarmData.State.None;
     public FishingData.State mFishingObjectState = FishingData.State.None;
@@ -29,13 +31,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
             mRigid = GetComponent<Rigidbody2D>();
             mAnimator = GetComponent<Animator>();
+
         }
         else
         {
@@ -43,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-  
+
 
     public void SetState(State state)
     {
@@ -54,15 +57,15 @@ public class PlayerMovement : MonoBehaviour
         mMovement = value.Get<Vector2>();
         if (mMovement.x != 0 || mMovement.y != 0)
         {
-            if(mMovement.x < 0.0f)
+            if (mMovement.x < 0.0f)
             {
                 SetDirection(Direction.Left);
             }
-            else if(mMovement.x > 0.0f)
+            else if (mMovement.x > 0.0f)
             {
                 SetDirection(Direction.Right);
             }
-            if(mMovement.y < 0.0f)
+            if (mMovement.y < 0.0f)
             {
                 SetDirection(Direction.Down);
             }
@@ -74,13 +77,25 @@ public class PlayerMovement : MonoBehaviour
             //mAnimator.SetFloat("Y", mMovement.y);
 
             mAnimator.SetBool("IsWalking", true);
+
         }
         else
         {
             mAnimator.SetBool("IsWalking", false);
+
         }
 
     }
+    private void OnAttack()
+    {
+        Debug.Log("OnAttack");
+        mState = State.Attack;
+        mAnimator.SetBool("IsAttack", true);
+
+        //StartCoroutine(WaitAttackAction());
+    }
+
+
 
     public void SetDirection(Direction value)
     {
@@ -105,23 +120,42 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (mState == State.None)
         {
             return;
         }
-        //variant 1
-        mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.fixedDeltaTime);
-
-        // varivant 2
-        //if (movement.x != 0 || movement.y != 0)
+        if (mState == State.Active)
+        {
+            //variant 1
+            mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.deltaTime);
+        }
+        if (mState == State.Attack)
+        {
+            StartCoroutine(WaitAttackAction());
+        }
+            
+        //    
+        //}
+        //if(Input.GetButtonDown("Attack") && mState != State.Attack)
         //{
-        //    mRigid.velocity = movement * mSpeed;
+        //    StartCoroutine(AttackWait());
         //}
 
-        // varivant 3
-        //mRigid.AddForce(movement * mSpeed);
+    }
+
+    private IEnumerator WaitAttackAction()
+    {
+        Debug.Log("WaitAttackAction");
+
+        Time.timeScale = 1;
+
+        yield return new WaitForSeconds(0.75f);
+
+        Debug.Log("Wait_end");
+        mAnimator.SetBool("IsAttack", false);
+        mState = State.Active;
     }
 
     public void SetInteractionObject(InteractionObject interactionObj)
@@ -135,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
             mZoneName = ZoneData.Name.Field;
             return;
         }
-        
+
         //mFarmObjectState = state;
         switch (interactionObj.mType)
         {
@@ -179,9 +213,9 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case InteractionObject.ObjectType.Doorway:
-                if(mGoToZoneName == ZoneData.Name.House)
+                if (mGoToZoneName == ZoneData.Name.House)
                 {
-                     GameManager.Instance.HouseSceneLoad();
+                    GameManager.Instance.HouseSceneLoad();
                 }
                 if (mGoToZoneName == ZoneData.Name.Field)
                 {
@@ -259,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
         {
             FarmObject farm = (FarmObject)mInteractionObj;
             farm.UpdateState();
-               
+
         }
 
         if (mInteractionObj.mType == InteractionObject.ObjectType.Fishing)
@@ -281,10 +315,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (mInteractionObj.mType == InteractionObject.ObjectType.Npc)
         {
-           NpcObject npc = (NpcObject)mInteractionObj;
+            NpcObject npc = (NpcObject)mInteractionObj;
 
-           npc.UpdateState();
+            npc.UpdateState();
         }
     }
- 
+
 }

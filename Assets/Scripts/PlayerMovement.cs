@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (mState == State.None)
         {
@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
         if (mState == State.Active)
         {
             //variant 1
-            mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.deltaTime);
+            mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.fixedDeltaTime);
         }
      
         //    

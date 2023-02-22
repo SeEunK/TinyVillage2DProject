@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     private MainHUD mMainHUD = null;
     private NpcShop mNpcShop = null;
 
+ 
+    private AmountPopup mAmountPopup = null;
+
     void Awake()
     {
         if(instance== null)
@@ -42,6 +45,10 @@ public class UIManager : MonoBehaviour
         mNpcShop = shopUI.GetComponent<NpcShop>();
         mNpcShop.SetShopContents();
 
+        GameObject amountPopup = this.transform.Find("AmountPopup").gameObject;
+        mAmountPopup= amountPopup.GetComponent<AmountPopup>();
+
+        SetAmountPopup(false);
         SetActionButton(false);
         SetInventoryUI(false);
         SetInventoryButton(false);
@@ -49,6 +56,10 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void SetAmountPopup(bool value)
+    {
+        mAmountPopup.SetActiveAmountPopup(value);
+    }
     public void SetNpcShopPopupUI(bool value)
     {
         mNpcShop.SetPopupActive(value);
@@ -78,7 +89,10 @@ public class UIManager : MonoBehaviour
         return mMainHUD; 
     }
 
-
+    public AmountPopup GetAmountPopup()
+    {
+        return mAmountPopup;
+    }
 
 
 }

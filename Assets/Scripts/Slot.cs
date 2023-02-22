@@ -107,6 +107,8 @@ public class Slot : MonoBehaviour
         if (mItem != null)
         {
             Debug.LogFormat("OnSelectItem : {0}", mItem.mName);
+       
+            
         }
 
         Debug.Log("OnSelectItem");

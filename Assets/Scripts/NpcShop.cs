@@ -36,12 +36,26 @@ public class NpcShop : MonoBehaviour
             ShopSlot slot = slotObject.GetComponent<ShopSlot>();
 
             Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
-            Sprite itemIcon = itemImages[13];
-            ItemData item = new ItemData(2, "당근", itemIcon, 99);
 
-            ShopData shopData = new ShopData(i, item, 900, -1);
-            slot.SetSlot(i, shopData);
+            // [임시] 수량제한 상품 세팅을 위해 
+            if (i == 0)
+            {
+                Sprite itemIcon = itemImages[2];
+                ItemData item = new ItemData(3, "사과", itemIcon, 99);
 
+                ShopData shopData = new ShopData(i, item, 100, 3, ShopData.ProductType.QuantityLimit);
+
+                slot.SetSlot(i, shopData);
+            }
+            else
+            {
+                Sprite itemIcon = itemImages[13];
+                ItemData item = new ItemData(2, "당근", itemIcon, 99);
+
+                ShopData shopData = new ShopData(i, item, 900, -1, ShopData.ProductType.UnLimite);
+
+                slot.SetSlot(i, shopData);
+            }
             mItemArray[i] = slot;
         }
 

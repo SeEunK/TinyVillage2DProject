@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public Direction mDirection = Direction.Down;
 
 
-    [SerializeField] private float mSpeed = 5.0f;
+    [SerializeField] 
+    private float mSpeed = 5.0f;
 
     private Vector2 mMovement;
     private Rigidbody2D mRigid;

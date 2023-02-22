@@ -13,7 +13,8 @@ public class UserData : MonoBehaviour
 
     public List<ItemData> mItemDataList = new List<ItemData>();
 
-
+    [SerializeField]
+    private int mGold = 0;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class UserData : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+            mGold = 1000000;
         }
         else
         {
@@ -58,6 +60,23 @@ public class UserData : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public int GetGold()
+    {
+        return mGold;
+    }
+    public void OnUpdateGold(bool isAdd , int value)
+    {
+        if (isAdd == true)
+        {
+            mGold += value;
+        }
+        else
+        {
+            mGold -= value;
+        }
+
     }
 
     public void AddItem(ItemData item)

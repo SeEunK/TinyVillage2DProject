@@ -12,6 +12,7 @@ public class MainHUD: MonoBehaviour
 
     public GameObject mBtnInventory = null;
   
+    
 
     private void Awake()
     {

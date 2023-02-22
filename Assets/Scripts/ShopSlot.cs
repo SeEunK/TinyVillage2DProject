@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static ShopData;
 
 public class ShopSlot : MonoBehaviour
 {
@@ -18,14 +19,18 @@ public class ShopSlot : MonoBehaviour
     [SerializeField]
     private TMP_Text mTextPrice;
 
+    public enum State { None, SoldOut}
+    public State mState = State.None;
     public void SetSlot(int index, ShopData product)
     {
         this.mIndex = index;
         this.mProduct = product;
+        
     }
 
     private void Start()
     {
+        mState = State.None;
         mItemImage.sprite = mProduct.GetItem().mImage;
         UpdateItemCount();
         SetPriceText();
@@ -37,25 +42,84 @@ public class ShopSlot : MonoBehaviour
                     
     }
 
+    public ShopData GetProduct()
+    {
+        return mProduct;
+    }
+
+    public State GetState()
+    {
+        return mState;
+    }
+
     public void UpdateItemCount()
     {
-       if(mProduct.GetCount() > 0)
+        ShopData.ProductType type  = mProduct.GetProductType();
+
+        switch (type)
         {
-            mTextItemCount.text = mProduct.GetCount().ToString();
+            case ProductType.UnLimite:
+                mCountBg.SetActive(false);
+                mTextItemCount.enabled = false;
+                break;
+
+            case ProductType.QuantityLimit:
+                if (mProduct.GetCount() > 0)
+                {
+                    mTextItemCount.text = mProduct.GetCount().ToString();
+                    //AmountPopup amountPopup = UIManager.instance.GetAmountPopup();
+                    //amountPopup.UpdateMaxValue();
+
+                }
+                else if (mProduct.GetCount() == 0)
+                {
+                    mTextItemCount.color = Color.red;
+                    mTextItemCount.text = "Sold Out";
+                    mState = State.SoldOut;
+
+
+                }
+                break;
         }
-        else if(mProduct.GetCount() == 0)
+      
+    }
+    public void OnReduceItemCount(int value)
+    {
+       
+        switch (mProduct.GetProductType())
         {
-            mTextItemCount.text = "Sold Out";
+            case ProductType.UnLimite:
+                break;
+            case ProductType.QuantityLimit:
+                if (mState != State.SoldOut)
+                {
+                    mProduct.mCount -= value;
+                    UpdateItemCount();
+                }
+                else
+                {
+                    return;
+                }
+                break;
         }
-       else
-        {
-            mCountBg.SetActive(false);
-            mTextItemCount.enabled= false;
-        }
+        
     }
 
     public void ShopSlotClick()
     {
         Debug.LogFormat("click {0}", mIndex);
+
+        if (mState == State.SoldOut)
+        {
+            Debug.LogFormat("click {0} item SOLD OUT!", mIndex);
+            return;
+        }
+
+        AmountPopup amountPopup = UIManager.instance.GetAmountPopup();
+
+        string pupupTitle = mProduct.GetItem().mName;
+        amountPopup.SetPopupInit(this.gameObject, pupupTitle, mProduct);
+        
+        UIManager.instance.SetAmountPopup(true);
     }
 }

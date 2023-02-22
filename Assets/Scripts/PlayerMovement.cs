@@ -91,9 +91,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("OnAttack");
         mState = State.Attack;
-        mAnimator.SetBool("IsAttack", true);
+        //mAnimator.SetBool("IsAttack", true);
+        
+        mAnimator.Play("AttackTree");
 
-        //StartCoroutine(WaitAttackAction());
+        mState = State.Active;
+
     }
 
 
@@ -132,11 +135,7 @@ public class PlayerMovement : MonoBehaviour
             //variant 1
             mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.deltaTime);
         }
-        if (mState == State.Attack)
-        {
-            StartCoroutine(WaitAttackAction());
-        }
-            
+     
         //    
         //}
         //if(Input.GetButtonDown("Attack") && mState != State.Attack)

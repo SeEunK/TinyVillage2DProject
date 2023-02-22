@@ -37,6 +37,12 @@ public class Slime : Enemy
         CheckDistance();
     }
 
+    public override void Attacked()
+    {
+        base.Attacked();
+        mHP -= 1;
+
+    }
 
     public void CheckDistance()
     {

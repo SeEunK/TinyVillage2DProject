@@ -6,8 +6,8 @@ public class KnockBack : MonoBehaviour
 {
 
 
-    private float mThrust = 5.0f;
-    private float mKnockTime = 0.2f;
+    private float mThrust = 1.0f;
+    private float mKnockTime = 0.3f;
 
 
 
@@ -19,7 +19,7 @@ public class KnockBack : MonoBehaviour
 
             if(enemy != null)
             {
-                enemy.isKinematic= false;
+                enemy.GetComponent<Slime>().SetState(Slime.State.Hit);
                 Vector2 difference = enemy.transform.position - this.transform.position;
 
                 difference = difference.normalized * mThrust;
@@ -35,7 +35,8 @@ public class KnockBack : MonoBehaviour
         {
             yield return new WaitForSeconds(mKnockTime);
             enemy.velocity = Vector2.zero;
-            enemy.isKinematic = true; 
+            enemy.GetComponent<Slime>().SetState(Slime.State.Idle);
+
         }
     }
 }

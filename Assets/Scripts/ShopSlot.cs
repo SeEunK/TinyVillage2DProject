@@ -116,9 +116,7 @@ public class ShopSlot : MonoBehaviour
         }
 
         AmountPopup amountPopup = UIManager.instance.GetAmountPopup();
-
-        string pupupTitle = mProduct.GetItem().mName;
-        amountPopup.SetPopupInit(this.gameObject, pupupTitle, mProduct);
+        amountPopup.SetPopupInit(this.gameObject,mProduct);
         
         UIManager.instance.SetAmountPopup(true);
     }

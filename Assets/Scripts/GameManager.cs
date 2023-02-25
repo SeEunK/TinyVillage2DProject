@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         //player 정보 수정
         PlayerMovement.Instance.SetState(PlayerMovement.State.None);
 
+     
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
 
@@ -53,7 +54,16 @@ public class GameManager : MonoBehaviour
         CinemachineVirtualCamera cmvCamera = camera.GetComponent<CinemachineVirtualCamera>();
         cmvCamera.Follow = PlayerMovement.Instance.transform;
 
+        
+        // main hud UI활성화
         UIManager.instance.GetMainHud().SetInventoryButton(true);
+        UIManager.instance.GetMainHud().UpdatePlayerHpBar(PlayerMovement.Instance.GetHpCount(),PlayerMovement.Instance.GetMaxHp());
+        UIManager.instance.GetMainHud().UpdatePlayerGoldCount();
+        UIManager.instance.GetMainHud().SetPlayerInfo(true);
+
+
+
+
     }
 
     public void HouseSceneLoad()
@@ -84,5 +94,6 @@ public class GameManager : MonoBehaviour
         cmvCamera.Follow = PlayerMovement.Instance.transform;
 
         UIManager.instance.GetMainHud().SetInventoryButton(true);
+        UIManager.instance.SetPlayerInfo(true);
     }
 }

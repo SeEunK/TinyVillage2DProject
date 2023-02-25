@@ -66,17 +66,9 @@ public class UserData : MonoBehaviour
     {
         return mGold;
     }
-    public void OnUpdateGold(bool isAdd , int value)
+    public void OnUpdateGold(int value)
     {
-        if (isAdd == true)
-        {
-            mGold += value;
-        }
-        else
-        {
-            mGold -= value;
-        }
-
+        mGold += value;
     }
 
     public void AddItem(ItemData item)

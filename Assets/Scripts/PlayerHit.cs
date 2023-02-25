@@ -8,7 +8,17 @@ public class PlayerHit : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<Slime>().Attacked();
+            if (other == null)
+            {
+                return;
+            }
+            
+            if (Vector3.Distance(other.GetComponent<Slime>().transform.position, transform.position) < 1.5f)
+            {
+                other.GetComponent<Slime>().Attacked();
+           
+            }
+           
         }
     }
 }

@@ -23,7 +23,10 @@ public class ShopData
         this.mType = type;
     }
 
-
+    public string GetName()
+    {
+        return mItem.mName;
+    }
     public ProductType GetProductType()
     {
         return mType;

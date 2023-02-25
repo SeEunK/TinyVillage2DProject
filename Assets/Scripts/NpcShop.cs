@@ -43,7 +43,7 @@ public class NpcShop : MonoBehaviour
                 Sprite itemIcon = itemImages[2];
                 ItemData item = new ItemData(3, "»ç°ú", itemIcon, 99);
 
-                ShopData shopData = new ShopData(i, item, 100, 3, ShopData.ProductType.QuantityLimit);
+                ShopData shopData = new ShopData(i, item, 100, 10, ShopData.ProductType.QuantityLimit);
 
                 slot.SetSlot(i, shopData);
             }

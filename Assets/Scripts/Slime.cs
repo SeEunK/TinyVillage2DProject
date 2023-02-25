@@ -4,13 +4,15 @@ using System.Data;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Slime : Enemy
 {
     public Vector3 mStartPos;
     public Transform mTarget;
     
-    public enum State { Idle, AttackIn, AttackOut, Move , GoToHome, Hit}
+    public enum State { Idle, AttackIn, AttackOut, Move , GoToHome, Hit, Die }
     public State mState = State.Idle;
 
     [SerializeField]
@@ -21,6 +23,10 @@ public class Slime : Enemy
     [SerializeField]
     private float mAreaRadius;
 
+
+    private float mThrust = 2.0f;
+    private float mKnockTime = 0.5f;
+
     public Animator mAnimator;
 
     public enum Direction { Up, Down, Left, Right }
@@ -29,12 +35,22 @@ public class Slime : Enemy
     public float mAttackSpeed;
     public float mAttackActionTime;
 
+    public float mHitActionTime;
     public Vector3 mAttackTargetPos;
     public Vector3 mAttackStartPos;
+    public Vector3 mHitOppositePos;
+
+    public Image mImgHp = null;
+    
+    public int mMaxHP = 0;
+    public TMP_Text mHpCount = null;
 
     void Start()
     {
         mHP = 10;
+        mMaxHP = mHP;
+        mImgHp.fillAmount = (float)mHP / (float)mMaxHP;
+        mHpCount.text = string.Format("{0}/{1}", mHP, mMaxHP);
         mName = "그린슬라임";
         mMoveSpeed = 1.0f;
         mBaseAttack = 1;
@@ -44,12 +60,13 @@ public class Slime : Enemy
         mTarget = GameObject.FindWithTag("Player").transform;
         mAreaRadius = 10.0f;
         mMoveRadius = 4.0f;
-        mAttackRadius = 0.5f;
+        mAttackRadius = 1.0f;
         mAttackActionTime = 1.0f;
-
+        mHitActionTime = 1.0f;
         mDirection = Direction.Down;
         mState = State.Idle;
         mStartPos = this.transform.position;
+        mHitOppositePos = Vector3.zero;
 
     }
 
@@ -62,10 +79,12 @@ public class Slime : Enemy
 
     public void UpdateState()
     {
+        bool isDead = (mState == State.Die);
         bool isAttackAtion = (mState == State.AttackIn || mState == State.AttackOut);
         bool isHitAction = (mState == State.Hit);
+
         // 공격중일때는 상태 변경을 막기 위해 return;
-        if(isAttackAtion || isHitAction)
+        if(isAttackAtion || isHitAction || isDead)
         {
             return;
         }
@@ -132,18 +151,7 @@ public class Slime : Enemy
                         mState = State.Idle;
                     }
 
-                    // attackin -> out
-                    //if (transform.position == mAttackTargetPos)
-                    //{
-                    //    mState = State.AttackOut;
-                    //}
-                    //else
-                    //{
-                    //  CheckDirection(transform.position, mAttackTargetPos);
-                    //    SetDirection(mDirection);
-                    //    mAnimator.SetBool("IsAttack", true);
-                        //transform.position = Vector3.MoveTowards(transform.position, mAttackTargetPos, mAttackSpeed * Time.deltaTime);
-                    //}
+                   
                     break;
                 }
             case State.AttackOut:
@@ -178,14 +186,97 @@ public class Slime : Enemy
                     transform.position = Vector3.MoveTowards(transform.position, mStartPos, mMoveSpeed * Time.deltaTime);
                     break;
                 }
+            case State.Hit:
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, mHitOppositePos, mThrust * Time.deltaTime);
+                    // knockback 종료 대기 후 상태 변경.
+                    if (IsHitAtionEnd(Time.deltaTime))
+                    { 
+                        SetState(State.Idle);
+                    }
+                    break;
+                }
+
         }
     }
+
+    public void Attack()
+    {
+        if (mTarget == null)
+        {
+            return;
+        }
+        if (Vector3.Distance(mTarget.position, transform.position) < 1.0f)
+        {
+            mTarget.GetComponent<PlayerMovement>().OnDamege(mBaseAttack);
+        }
+    }
+
 
     public override void Attacked()
     {
         base.Attacked();
-        mHP -= 1;
+        // 공격중인 모션 종료하고,
+        mAnimator.SetBool("IsAttack", false);
 
+        // knockback 으로 밀려날 좌표를 저장해두고
+        Vector2 opposite = (mTarget.position - this.transform.position);
+        Debug.LogFormat("1. {0}", opposite);
+        opposite = opposite.normalized * mThrust;
+        Debug.LogFormat("2. {0}", opposite);
+        mHitOppositePos = transform.position - (Vector3)opposite;
+
+        // 데미지 차감
+        mHP -= 1;
+        mImgHp.fillAmount = (float)mHP / (float)mMaxHP;
+        mHpCount.text = string.Format("{0}/{1}", mHP, mMaxHP);
+
+      
+
+        if (mHP <= 0)
+        {
+            SetState(State.Die);
+            Die();
+        }
+        else
+        {
+            // 상태 hit 전환
+            SetState(State.Hit);
+        }
+
+    }
+
+    public void Die()
+    {
+        mAnimator.SetTrigger("IsDead");
+        // 스포너 만들면 여기에서 처리추가
+
+    }
+
+    public bool IsHitAtionEnd(float time)
+    {
+        mHitActionTime -= time;
+
+        if (mHitActionTime < 0)
+        {
+            SetState(State.Idle);
+            mHitOppositePos = Vector3.zero;
+            mHitActionTime = 1.0f;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    private IEnumerator WaitKnockTime()
+    {
+        yield return new WaitForSeconds(mKnockTime);
+        this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        SetState(Slime.State.Idle);
+        Debug.Log(mState);
     }
 
     public void SetState(State state)
@@ -201,7 +292,7 @@ public class Slime : Enemy
         {
             mAnimator.SetBool("IsAttack", false);
             mState = State.AttackOut;
-            mAttackActionTime = 1.0f;
+            mAttackActionTime = 2.0f;
             return true;
         }
         else

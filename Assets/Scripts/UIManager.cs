@@ -12,8 +12,6 @@ public class UIManager : MonoBehaviour
     public GameObject mInventroy = null;
     private MainHUD mMainHUD = null;
     private NpcShop mNpcShop = null;
-
- 
     private AmountPopup mAmountPopup = null;
 
     void Awake()
@@ -52,10 +50,15 @@ public class UIManager : MonoBehaviour
         SetActionButton(false);
         SetInventoryUI(false);
         SetInventoryButton(false);
-        SetNpcShopPopupUI(false); 
+        SetNpcShopPopupUI(false);
+        SetPlayerInfo(false);
 
     }
 
+    public void UpdatePlayerInfo(int Hp ,int maxHP)
+    {
+        mMainHUD.UpdatePlayerHpBar(Hp,maxHP);
+    }
     public void SetAmountPopup(bool value)
     {
         mAmountPopup.SetActiveAmountPopup(value);
@@ -69,7 +72,10 @@ public class UIManager : MonoBehaviour
     {
         mInventroy.SetActive(value);
     }
-
+    public void SetPlayerInfo(bool value)
+    {
+        mMainHUD.SetPlayerInfo(value);
+    }
     public void SetActionButton(bool value)
     {
         mMainHUD.SetActionButton(value);

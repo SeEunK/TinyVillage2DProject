@@ -12,95 +12,79 @@ public class AmountPopup : MonoBehaviour
     public TMP_Text mTxtTitle = null; 
     public Slider mSlider = null;
     public TMP_Text mTxtAmount = null;
-    public float mAmount = 0.0f;
+    public int mAmount = 0;
     public TMP_Text mTxtTotal = null;
-    public int mPerValue = 0;
-  
     public Button mBtnCancel = null;
     public Button mBtnOK = null;
-
-    public float mMinValue = 0.0f;
-    public float mMaxValue = 0.0f;
-
-    private ItemData mSelectItem = null;
 
     private ShopData mProduct = null;
     private GameObject mCaller = null;
 
-
-
-
-    public void SetPopupInit(GameObject callObject, string title, ShopData product)
+    public void SetPopupInit(GameObject callObject, ShopData product)
     {
         mCaller = callObject;
-
         mProduct = product;
-        
-        mTxtTitle.text = title;
-
-        mMinValue = 1;
-        mSlider.minValue = mMinValue;
+        mTxtTitle.text = product.GetName();
 
         // 수량 제한있는 타입체크 추가하자
-        if (mProduct.GetProductType() == ShopData.ProductType.UnLimite)
-        {
-            mMaxValue = 100;
-        }
-        else
-        {
-            mMaxValue = mProduct.GetCount();
-        }
-        mSlider.maxValue = mMaxValue;
-
-
-        mSelectItem = mProduct.GetItem();
-
+        InitSliderMinMaxValue();
         // 개당 value 받아와서 totalValue 설정
-        mPerValue = mProduct.GetPrice();
-        int totalValue = mPerValue * (int)mAmount;
-        mTxtTotal.text = totalValue.ToString();
+        UpdateTotalValue(mAmount);
+
     }
 
 
     public void OnChangeAmount()
     {
-        mAmount = mSlider.value;
-        UpDateTotalValue((int)mAmount);
-        mTxtAmount.text = mAmount.ToString();
+        mAmount = (int)mSlider.value;
+        UpdateTotalValue(mAmount);
     }
 
-    public void UpDateTotalValue(int amount)
+    public void UpdateTotalValue(int amount)
     {
-        int totalValue = mPerValue * amount;
+        // 선택 수량 갱신
+        mTxtAmount.text = amount.ToString();
+        // 수량 * 비용 금액 갱신
+        int totalValue = mProduct.GetPrice() * amount;
         mTxtTotal.text = totalValue.ToString();
     }
 
-    public void UpdateMaxValue()
+    public void InitSliderMinMaxValue()
     {
+        int minValue = 0;
+        int maxValue = 0;
+
         if (mProduct.GetProductType() == ShopData.ProductType.UnLimite)
         {
-            return;
+            minValue = 1; 
+            maxValue = 100;
         }
         else if(mProduct.GetProductType() == ShopData.ProductType.QuantityLimit)
         {
-            mMaxValue = mProduct.GetCount();
+            maxValue = mProduct.GetCount();
+            if(maxValue > 0)
+            {
+                minValue = 1;
+            }
         }
-            
-        mSlider.maxValue = mMaxValue;
+        else
+        {
+            minValue = 1; 
+            maxValue = 100;
+        }
+
+        mSlider.minValue = minValue;
+        mSlider.maxValue = maxValue;
+        mSlider.value = minValue;
+        mAmount = minValue;
+   
     }
 
-    public void SliderReset()
-    {
-        mSlider.value = 1;
-    
-        mAmount = mSlider.value;
-        mTxtAmount.text = mAmount.ToString();
-        UpDateTotalValue(1);
-    }
+
 
     public int GetTotalValue()
     {
-        return mPerValue * (int)mAmount;
+        return mProduct.GetPrice() * mAmount;
     }
 
     public void SetActiveAmountPopup(bool value)
@@ -111,24 +95,31 @@ public class AmountPopup : MonoBehaviour
     public void OnOkButtonClick()
     {
         // 수량 차감 
-        int amount = (int)mAmount;
+        Debug.LogFormat("amount {0}", mAmount);
+        //Debug.LogFormat("mSlider.value{0}", mSlider.value);
+
         ShopSlot slot = mCaller.GetComponent<ShopSlot>();
-        slot.OnReduceItemCount(amount);
-        UpdateMaxValue();
+        slot.OnReduceItemCount(mAmount);
 
         // N개 add 하는 게 없으니 일단, 수량만큼 반복 add
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < mAmount; i++)
         {
-            UserData.instance.AddItem(mSelectItem);
+            UserData.instance.AddItem(mProduct.GetItem());
         }
         // 유저 골드 차감
-        UserData.instance.OnUpdateGold(false, GetTotalValue());
+        int totalValue = GetTotalValue();
+        Debug.LogFormat("totalValue {0}", totalValue);
+        UserData.instance.OnUpdateGold(-totalValue);
+        UIManager.instance.GetMainHud().UpdatePlayerGoldCount();
+
 
         if (slot.GetState() == ShopSlot.State.SoldOut)
         {
             SetActiveAmountPopup(false);
+            return;
         }
-        // 슬라이더 다시 1로 초기화
-        SliderReset();
+        InitSliderMinMaxValue();
+        UpdateTotalValue(mAmount);
+      
     }
 }

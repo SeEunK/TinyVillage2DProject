@@ -30,6 +30,10 @@ public class PlayerMovement : MonoBehaviour
     public ZoneData.Name mZoneName = ZoneData.Name.Field;
     public ZoneData.Name mGoToZoneName = ZoneData.Name.Field;
 
+
+    public int mMaxHP = 0;
+    public int mHP = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -39,7 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
             mRigid = GetComponent<Rigidbody2D>();
             mAnimator = GetComponent<Animator>();
-
+            mMaxHP = 100;
+            mHP = mMaxHP;
+            
         }
         else
         {
@@ -98,8 +104,17 @@ public class PlayerMovement : MonoBehaviour
         mState = State.Active;
 
     }
+    
+    public void OnDamege(int damege)
+    {
+        mHP -= damege;
+        UIManager.instance.GetMainHud().UpdatePlayerHpBar(mHP, mMaxHP);
 
-
+        if(mHP<=0)
+        {
+            Debug.Log("player die");
+        }
+    }
 
     public void SetDirection(Direction value)
     {
@@ -135,14 +150,16 @@ public class PlayerMovement : MonoBehaviour
             //variant 1
             mRigid.MovePosition(mRigid.position + mMovement * mSpeed * Time.fixedDeltaTime);
         }
-     
-        //    
-        //}
-        //if(Input.GetButtonDown("Attack") && mState != State.Attack)
-        //{
-        //    StartCoroutine(AttackWait());
-        //}
+    }
 
+    public int GetHpCount ()
+    {
+        return mHP;
+    }
+
+    public int GetMaxHp()
+    {
+        return mMaxHP;
     }
 
     private IEnumerator WaitAttackAction()

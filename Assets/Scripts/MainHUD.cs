@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainHUD: MonoBehaviour
 {
@@ -11,17 +12,40 @@ public class MainHUD: MonoBehaviour
     public Image mImgAction = null;
 
     public GameObject mBtnInventory = null;
-  
-    
+    public GameObject mPlayerInfo = null;
+    public Image mImgPlayerHpFill = null;
+    public TMP_Text mHpCount = null;
+
+
+    public TMP_Text mGoldCount = null;
 
     private void Awake()
     {
+        GameObject HpInfo = mPlayerInfo.transform.Find("HpInfo").gameObject;
+        GameObject GoldInfo = mPlayerInfo.transform.Find("GoldInfo").gameObject;
 
         mImgAction = mBtnAction.transform.Find("ImgActionIcon").GetComponent<Image>();
-           
-       
+        mImgPlayerHpFill = HpInfo.transform.Find("imgHpFill").GetComponent<Image>();
+        mHpCount = mImgPlayerHpFill.transform.Find("txtHpCount").GetComponent<TMP_Text>();
+
+        mGoldCount = GoldInfo.transform.Find("txtGoldCount").GetComponent<TMP_Text>();
     }
 
+    public void UpdatePlayerHpBar(int hp, int maxHp)
+    {
+        mImgPlayerHpFill.fillAmount = (float)hp / (float)maxHp;
+        mHpCount.text = string.Format("{0}/{1}", hp, maxHp);
+    }
+
+    public void UpdatePlayerGoldCount()
+    {
+        mGoldCount.text = string.Format("{0}", UserData.instance.GetGold());
+    }
+
+    public void SetPlayerInfo(bool value)
+    {
+        mPlayerInfo.SetActive(value);
+    }
     public void SetActionButton(bool value)
     {
         mBtnAction.SetActive(value);

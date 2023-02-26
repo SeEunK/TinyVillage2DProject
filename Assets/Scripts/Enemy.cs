@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public int mHP;
     
     public int mBaseAttack;
+    public Vector3 mStartPos;
 
     void Start()
     {

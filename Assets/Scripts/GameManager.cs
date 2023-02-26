@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+
+    public List<GameObject> mSlimeList = new List<GameObject>();
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,14 +39,15 @@ public class GameManager : MonoBehaviour
         //player 정보 수정
         PlayerMovement.Instance.SetState(PlayerMovement.State.None);
 
-     
-
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
+        
 
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+
+        MonsterSpawner.Instance.SetPuse(false);
 
         //player 정보 수정
         PlayerMovement.Instance.SetDirection(PlayerMovement.Direction.Down);
@@ -63,12 +68,12 @@ public class GameManager : MonoBehaviour
         UIManager.instance.SetQuestButton(true);
 
 
-
-
     }
 
     public void HouseSceneLoad()
     {
+    
+
         StartCoroutine(HouseSceneLoadAsync());
     }
 
@@ -77,12 +82,22 @@ public class GameManager : MonoBehaviour
         //player 정보 수정
         PlayerMovement.Instance.SetState(PlayerMovement.State.None);
 
+
+        //활성화된 slime 전부 push
+        for (int i = 0; i < mSlimeList.Count;)
+        {
+            MonsterSpawner.Instance.PushSlime(mSlimeList[i]);
+        }
+
+        MonsterSpawner.Instance.SetPuse(true);
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("HouseScene");
 
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+
 
         //player 정보 수정
         PlayerMovement.Instance.SetDirection(PlayerMovement.Direction.Up);
@@ -96,5 +111,8 @@ public class GameManager : MonoBehaviour
 
         UIManager.instance.GetMainHud().SetInventoryButton(true);
         UIManager.instance.SetPlayerInfo(true);
+
+     
+      
     }
 }

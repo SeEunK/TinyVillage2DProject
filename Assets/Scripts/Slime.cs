@@ -7,9 +7,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class Slime : Enemy
 {
-    public Vector3 mStartPos;
+   
     public Transform mTarget;
     
     public enum State { Idle, AttackIn, AttackOut, Move , GoToHome, Hit, Die }
@@ -34,8 +35,9 @@ public class Slime : Enemy
 
     public float mAttackSpeed;
     public float mAttackActionTime;
-
     public float mHitActionTime;
+    public float mDieActionTime;
+
     public Vector3 mAttackTargetPos;
     public Vector3 mAttackStartPos;
     public Vector3 mHitOppositePos;
@@ -45,29 +47,41 @@ public class Slime : Enemy
     public int mMaxHP = 0;
     public TMP_Text mHpCount = null;
 
+    public MonsterSpawner mSpawner = null;
+
+
     void Start()
     {
+        mAnimator = GetComponent<Animator>();
+        mTarget = GameObject.FindWithTag("Player").transform;
+        
+    }
+
+    public void Init(Vector3 startPos)
+    {
         mHP = 10;
-        mMaxHP = mHP;
-        mImgHp.fillAmount = (float)mHP / (float)mMaxHP;
-        mHpCount.text = string.Format("{0}/{1}", mHP, mMaxHP);
         mName = "그린슬라임";
         mMoveSpeed = 1.0f;
         mBaseAttack = 1;
         mAttackSpeed = 3.0f;
-        mAnimator = GetComponent<Animator>();
 
-        mTarget = GameObject.FindWithTag("Player").transform;
+        mMaxHP = mHP;
+        mImgHp.enabled = true;
+        mImgHp.fillAmount = (float)mHP / (float)mMaxHP;
+        mHpCount.text = string.Format("{0}/{1}", mHP, mMaxHP);
+
         mAreaRadius = 10.0f;
         mMoveRadius = 4.0f;
         mAttackRadius = 1.0f;
         mAttackActionTime = 1.0f;
         mHitActionTime = 1.0f;
+        mDieActionTime  = 1.0f;
+
         mDirection = Direction.Down;
         mState = State.Idle;
-        mStartPos = this.transform.position;
         mHitOppositePos = Vector3.zero;
-
+        mStartPos = startPos;
+        Reposition();
     }
 
     private void Update()
@@ -109,7 +123,8 @@ public class Slime : Enemy
             }
             else
             {   // player die 일때도 gotohome 추가해야함.
-                if (transform.position != mStartPos)
+                // 시작 포지션과 현재 위치가 1 이상 벌어진 경우까지만 gotohome (1 정도는 허용 하기위함)
+                if (Vector3.Distance(transform.position, mStartPos) > 1.0f)
                 {
                     mState = State.GoToHome;
                 }
@@ -196,7 +211,20 @@ public class Slime : Enemy
                     }
                     break;
                 }
+            case State.Die:
+                {
+                    if (IsDieAtionEnd(Time.deltaTime))
+                    {
+                        Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+                        Sprite itemIcon = itemImages[4];
+                        ItemData getItem = new ItemData(4, "초록색 이파리", itemIcon, 99);
+                        UserData.instance.AddItem(getItem);
 
+                        mSpawner.PushSlime(this.gameObject);
+                        Init(mStartPos);
+                    }
+                    break;
+                }
         }
     }
 
@@ -216,42 +244,60 @@ public class Slime : Enemy
     public override void Attacked()
     {
         base.Attacked();
-        // 공격중인 모션 종료하고,
-        mAnimator.SetBool("IsAttack", false);
-
-        // knockback 으로 밀려날 좌표를 저장해두고
-        Vector2 opposite = (mTarget.position - this.transform.position);
-        Debug.LogFormat("1. {0}", opposite);
-        opposite = opposite.normalized * mThrust;
-        Debug.LogFormat("2. {0}", opposite);
-        mHitOppositePos = transform.position - (Vector3)opposite;
-
-        // 데미지 차감
-        mHP -= 1;
-        mImgHp.fillAmount = (float)mHP / (float)mMaxHP;
-        mHpCount.text = string.Format("{0}/{1}", mHP, mMaxHP);
-
-      
-
-        if (mHP <= 0)
+        if (mState != State.Die)
         {
-            SetState(State.Die);
-            Die();
-        }
-        else
-        {
-            // 상태 hit 전환
-            SetState(State.Hit);
+            // 공격중인 모션 종료하고,
+            mAnimator.SetBool("IsAttack", false);
+
+            // knockback 으로 밀려날 좌표를 저장해두고
+            Vector2 opposite = (mTarget.position - this.transform.position);
+            Debug.LogFormat("1. {0}", opposite);
+            opposite = opposite.normalized * mThrust;
+            Debug.LogFormat("2. {0}", opposite);
+            mHitOppositePos = transform.position - (Vector3)opposite;
+
+            // 데미지 차감
+            mHP -= 1;
+            mImgHp.fillAmount = (float)mHP / (float)mMaxHP;
+            mHpCount.text = string.Format("{0}/{1}", mHP, mMaxHP);
+
+
+
+            if (mHP <= 0)
+            {
+                SetState(State.Die);
+                Die();
+            }
+            else
+            {
+                // 상태 hit 전환
+                SetState(State.Hit);
+            }
         }
 
     }
 
     public void Die()
     {
+        
+        mImgHp.enabled = false;
         mAnimator.SetTrigger("IsDead");
         QuestManager.instance.AddAccCount(QuestData.QuestConditionType.MonsterKill, 1);
-        // 스포너 만들면 여기에서 처리추가
 
+    }
+
+    public bool IsDieAtionEnd(float time)
+    {
+        mDieActionTime -= time;
+        if (mDieActionTime < 0)
+        {
+            mDieActionTime = 1.0f;
+            return true;
+        }
+        else
+        {
+            return false;   
+        }
     }
 
     public bool IsHitAtionEnd(float time)
@@ -375,6 +421,12 @@ public class Slime : Enemy
                 mAnimator.SetFloat("Y", 0.0f);
                 break;
         }
+
+    }
+
+    public void Reposition()
+    {
+        transform.position = mStartPos;
 
     }
 }

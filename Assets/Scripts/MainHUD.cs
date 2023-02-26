@@ -12,11 +12,11 @@ public class MainHUD: MonoBehaviour
     public Image mImgAction = null;
 
     public GameObject mBtnInventory = null;
+    public GameObject mBtnQuest = null;
+
     public GameObject mPlayerInfo = null;
     public Image mImgPlayerHpFill = null;
     public TMP_Text mHpCount = null;
-
-
     public TMP_Text mGoldCount = null;
 
     private void Awake()
@@ -56,7 +56,10 @@ public class MainHUD: MonoBehaviour
     {
         mBtnInventory.SetActive(value);
     }
-
+    public void SetQuestButton(bool value)
+    {
+        mBtnQuest.SetActive(value);
+    }
 
     public void UpdateNPCActionButtonSprite()
     {
@@ -148,6 +151,10 @@ public class MainHUD: MonoBehaviour
 
     }
 
-
+    public void OpenQuestMenu()
+    {
+        UIManager.instance.GetQuestPopup().UpdateQuestCell();
+        UIManager.instance.SetQuestPopup(true);
+    }
 
 }

@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     private MainHUD mMainHUD = null;
     private NpcShop mNpcShop = null;
     private AmountPopup mAmountPopup = null;
+    private Quest mQuestPopup = null;
+
 
     void Awake()
     {
@@ -46,15 +48,28 @@ public class UIManager : MonoBehaviour
         GameObject amountPopup = this.transform.Find("AmountPopup").gameObject;
         mAmountPopup= amountPopup.GetComponent<AmountPopup>();
 
+        GameObject QuestPopup = this.transform.Find("QuestPopup").gameObject;
+        mQuestPopup = QuestPopup.GetComponent<Quest>();
+
         SetAmountPopup(false);
         SetActionButton(false);
         SetInventoryUI(false);
         SetInventoryButton(false);
         SetNpcShopPopupUI(false);
         SetPlayerInfo(false);
+        SetQuestPopup(false);
+        SetQuestButton(false);
 
     }
 
+    public void SetQuestPopup(bool value)
+    {
+        mQuestPopup.SetQuestMenu(value);
+    }
+    public void SetQuestButton(bool value)
+    {
+        mMainHUD.SetQuestButton(value);
+    }
     public void UpdatePlayerInfo(int Hp ,int maxHP)
     {
         mMainHUD.UpdatePlayerHpBar(Hp,maxHP);
@@ -98,6 +113,11 @@ public class UIManager : MonoBehaviour
     public AmountPopup GetAmountPopup()
     {
         return mAmountPopup;
+    }
+
+    public Quest GetQuestPopup()
+    {
+        return mQuestPopup;
     }
 
 

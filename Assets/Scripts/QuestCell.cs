@@ -6,10 +6,7 @@ using UnityEngine.UI;
 
 public class QuestCell : MonoBehaviour
 {
-    // 데이터로 분리해야되는 값
-    const int REWARD_GOLD = 1000;
-
-
+    
     public TMP_Text mTxtTitle = null;
 
     public TMP_Text mTxtDescription = null;
@@ -29,8 +26,9 @@ public class QuestCell : MonoBehaviour
     public void UpdateQuestCell(QuestData.QuestConditionType type)
     {
         mData = QuestManager.instance.GetQuestData(type);
+        Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
         // 진행중인 퀘스트가 있는 경우
-        if(mData != null)
+        if (mData != null)
         {
             int accCount = QuestManager.instance.GetAccCount(type);
             if(accCount > mData.mTotalCount)
@@ -48,17 +46,34 @@ public class QuestCell : MonoBehaviour
             mTxtCount.gameObject.SetActive(true);
             mTxtCount.text = string.Format("({0}/{1})", accCount, mData.mTotalCount);
 
+            //보상
+            
+            switch (mData.mRewardType){
+                case QuestData.RewardType.Gold:
+                    {
+                        Sprite itemIcon = itemImages[10];
+                        mObjReward.transform.Find("icoReward").GetComponent<Image>().sprite = itemIcon;
+                        break;
+                    }
+                case QuestData.RewardType.Item:
+                    {
+                        Sprite itemIcon = mData.mReward.mImage;
+                        mObjReward.transform.Find("icoReward").GetComponent<Image>().sprite = itemIcon;
+                        break;
+                    }
+            }
             mObjReward.SetActive(true);
-            mTxtRewardCount.text = REWARD_GOLD.ToString();
+
+            mTxtRewardCount.text = mData.mReawardCount.ToString();
             // 클리어 해서 보상을 받을 수 있을때
             if (accCount == mData.mTotalCount)
             {
-                
+                mObjReward.transform.Find("completeBg").gameObject.SetActive(true);
             }
             // 아직 보상을 받을 수 없을때
             else
             {
-
+                mObjReward.transform.Find("completeBg").gameObject.SetActive(false);
             }
 
             mObjComplete.SetActive(false);
@@ -85,9 +100,9 @@ public class QuestCell : MonoBehaviour
     {
         switch(type)
         {
-            case QuestData.QuestConditionType.MonsterKill: { return "Monster Kill"; }
-            case QuestData.QuestConditionType.Fishing: { return "Fishing"; }
-            case QuestData.QuestConditionType.Farming: { return "Farming"; }
+            case QuestData.QuestConditionType.MonsterKill: { return "[Hunter]"; }
+            case QuestData.QuestConditionType.Fishing: { return "[Fisherman]"; }
+            case QuestData.QuestConditionType.Farming: { return "[Farmer]"; }
         }
         return "Unknown";
     }
@@ -109,9 +124,27 @@ public class QuestCell : MonoBehaviour
 
                 // 보상 지급 
                 mData.SetRewarded(true);
-                UserData.instance.OnUpdateGold(REWARD_GOLD);
-                UIManager.instance.GetMainHud().UpdatePlayerGoldCount();
 
+                switch (mData.mRewardType)
+                {
+                    case QuestData.RewardType.Gold:
+                        {
+                            UserData.instance.OnUpdateGold(mData.mReawardCount);
+                            UIManager.instance.GetMainHud().UpdatePlayerGoldCount();
+                            break;
+                        }
+                    case QuestData.RewardType.Item:
+                        {
+                            for (int i = 0; i < mData.mReawardCount; i++)
+                            {
+                                UserData.instance.AddItem(mData.mReward);
+                            }
+                            break;
+                        }
+                }
+
+                // 해당 누적 카운트 0으로 초기화 
+                QuestManager.instance.ResetAccCount(mData.mConditionType);
                 // 업데이트
                 this.UpdateQuestCell(mData.mConditionType);
             }

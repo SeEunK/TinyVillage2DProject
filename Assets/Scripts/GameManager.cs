@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.GetMainHud().UpdatePlayerHpBar(PlayerMovement.Instance.GetHpCount(),PlayerMovement.Instance.GetMaxHp());
         UIManager.instance.GetMainHud().UpdatePlayerGoldCount();
         UIManager.instance.GetMainHud().SetPlayerInfo(true);
+        UIManager.instance.SetQuestButton(true);
 
 
 

@@ -39,18 +39,23 @@ public class QuestManager : MonoBehaviour
 
     public void QuestTableCreate()
     {
+        // item reward 용 임시로 하나 생성.
+        Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+        Sprite itemIcon = itemImages[13];
+        ItemData rewardItem = new ItemData(1, "무", itemIcon, 99);
+
         // monster kill quest 
         List<QuestData> monsterKillQestList = new List<QuestData>();
         {
-            QuestData quest = new QuestData("step 1. kill slime", QuestData.QuestConditionType.MonsterKill, 3);
+            QuestData quest = new QuestData("step 1. kill slime 3 times", QuestData.QuestConditionType.MonsterKill, 3, QuestData.RewardType.Item, rewardItem, 1);
             monsterKillQestList.Add(quest);
         }
         {
-            QuestData quest = new QuestData("step 2. kill slime", QuestData.QuestConditionType.MonsterKill, 5);
+            QuestData quest = new QuestData("step 2. kill slime 5 times", QuestData.QuestConditionType.MonsterKill, 5, QuestData.RewardType.Gold, null, 3000);
             monsterKillQestList.Add(quest);
         }
         {
-            QuestData quest = new QuestData("step 3. kill slime", QuestData.QuestConditionType.MonsterKill, 10);
+            QuestData quest = new QuestData("step 3. kill slime 10 times", QuestData.QuestConditionType.MonsterKill, 10, QuestData.RewardType.Item, rewardItem, 3);
             monsterKillQestList.Add(quest);
         }
         mQuestData.Add(QuestData.QuestConditionType.MonsterKill, monsterKillQestList);
@@ -59,35 +64,36 @@ public class QuestManager : MonoBehaviour
         // fishing quest  ================================================================================
         List<QuestData> fishingQestList = new List<QuestData>();
         {
-            QuestData quest = new QuestData("step 1. fishing", QuestData.QuestConditionType.Fishing, 3);
+            QuestData quest = new QuestData("step 1. fishing 3 times", QuestData.QuestConditionType.Fishing, 3 ,QuestData.RewardType.Gold, null, 1000);
             fishingQestList.Add(quest);
         }
         {
-            QuestData quest = new QuestData("step 2. fishing", QuestData.QuestConditionType.Fishing, 5);
+            QuestData quest = new QuestData("step 2. fishing 5 times", QuestData.QuestConditionType.Fishing, 5, QuestData.RewardType.Gold, null, 3000);
             fishingQestList.Add(quest);
         }
         {
-            QuestData quest = new QuestData("step 3. fishing", QuestData.QuestConditionType.Fishing, 10);
+            QuestData quest = new QuestData("step 3. fishing 10 times", QuestData.QuestConditionType.Fishing, 10, QuestData.RewardType.Item, rewardItem, 1);
             fishingQestList.Add(quest);
         }
-        mQuestData.Add(QuestData.QuestConditionType.MonsterKill, fishingQestList);
+        mQuestData.Add(QuestData.QuestConditionType.Fishing, fishingQestList);
         // fishing quest  ================================================================================
 
         // farm quest ================================================================================
         List<QuestData> farmQuest = new List<QuestData>();
         {
-            QuestData quest = new QuestData("step 1. farming", QuestData.QuestConditionType.Farming, 3);
+            QuestData quest = new QuestData("step 1. farming 3 times", QuestData.QuestConditionType.Farming, 3, QuestData.RewardType.Gold, null, 1000);
             farmQuest.Add(quest);
         }
         {
-            QuestData quest = new QuestData("step 2. farming", QuestData.QuestConditionType.Farming, 5);
+            QuestData quest = new QuestData("step 2. farming 5 times", QuestData.QuestConditionType.Farming, 5, QuestData.RewardType.Gold, null, 3000);
             farmQuest.Add(quest);
         }
         {
-            QuestData quest = new QuestData("step 3. farming", QuestData.QuestConditionType.Farming, 10);
+            
+            QuestData quest = new QuestData("step 3. farming 10 times", QuestData.QuestConditionType.Farming, 10, QuestData.RewardType.Item, rewardItem, 1);
             farmQuest.Add(quest);
         }
-        mQuestData.Add(QuestData.QuestConditionType.MonsterKill, farmQuest);
+        mQuestData.Add(QuestData.QuestConditionType.Farming, farmQuest);
         // farm quest ================================================================================
     }
 
@@ -106,6 +112,11 @@ public class QuestManager : MonoBehaviour
     public int GetAccCount(QuestData.QuestConditionType type)
     {
        return mQuestCounts[type];
+    }
+
+    public void ResetAccCount(QuestData.QuestConditionType type)
+    {
+        mQuestCounts[type] = 0;
     }
     
     //현재 진행중인 단계의 완료 조건 count 가져오기 (보상 수령을 받지 않은걸로 체크) 

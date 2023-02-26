@@ -89,8 +89,10 @@ public class FishingObject : InteractionObject
         if ( state == FishingData.State.Bait)
         {
             Debug.Log("fishing Success!!!");
+            QuestManager.instance.AddAccCount(QuestData.QuestConditionType.Fishing, 1);
+            
             UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.None);
-           
+
         }
 
     

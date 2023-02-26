@@ -249,6 +249,7 @@ public class Slime : Enemy
     public void Die()
     {
         mAnimator.SetTrigger("IsDead");
+        QuestManager.instance.AddAccCount(QuestData.QuestConditionType.MonsterKill, 1);
         // 스포너 만들면 여기에서 처리추가
 
     }

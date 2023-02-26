@@ -13,12 +13,6 @@ public class Quest : MonoBehaviour
     public List<QuestCell> mQuestList = new List<QuestCell>();
 
       
-    
-    public void Start()
-    {
-      
-        //InitQuest();
-    }
 
     public void InitQuest()
     {

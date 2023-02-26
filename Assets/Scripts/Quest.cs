@@ -14,10 +14,10 @@ public class Quest : MonoBehaviour
 
       
     
-    public void Awake()
+    public void Start()
     {
       
-        InitQuest();
+        //InitQuest();
     }
 
     public void InitQuest()

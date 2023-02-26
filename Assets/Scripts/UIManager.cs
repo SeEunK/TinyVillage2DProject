@@ -50,6 +50,7 @@ public class UIManager : MonoBehaviour
 
         GameObject QuestPopup = this.transform.Find("QuestPopup").gameObject;
         mQuestPopup = QuestPopup.GetComponent<Quest>();
+        mQuestPopup.InitQuest();
 
         SetAmountPopup(false);
         SetActionButton(false);

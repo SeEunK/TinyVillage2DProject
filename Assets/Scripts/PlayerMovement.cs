@@ -24,8 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private Animator mAnimator;
 
     public InteractionObject mInteractionObj = null;
-    public FarmData.State mFarmObjectState = FarmData.State.None;
-    public FishingData.State mFishingObjectState = FishingData.State.None;
 
     public ZoneData.Name mZoneName = ZoneData.Name.Field;
     public ZoneData.Name mGoToZoneName = ZoneData.Name.Field;
@@ -181,23 +179,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (interactionObj == null)
         {
-            mFarmObjectState = FarmData.State.None;
-            mFishingObjectState = FishingData.State.None;
             mZoneName = ZoneData.Name.Field;
             return;
         }
 
-        //mFarmObjectState = state;
+      
         switch (interactionObj.mType)
         {
             case InteractionObject.ObjectType.Farming:
                 FarmObject farm = (FarmObject)mInteractionObj;
-                mFarmObjectState = UserData.instance.mFarmDataList[farm.mIndex].GetState();
+                
 
                 break;
             case InteractionObject.ObjectType.Fishing:
                 FishingObject fishing = (FishingObject)mInteractionObj;
-                mFishingObjectState = UserData.instance.mFishingDataList[fishing.mIndex].GetState();
+              
                 break;
 
             case InteractionObject.ObjectType.Doorway:
@@ -212,7 +208,6 @@ public class PlayerMovement : MonoBehaviour
     public void Interaction()
     {
         //ObjectType { None, Fishing, Mining, Gathering, Logging, Farming }
-
         switch (mInteractionObj.mType)
         {
             case InteractionObject.ObjectType.None:
@@ -241,78 +236,77 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case InteractionObject.ObjectType.Fishing:
-
-                if (mFishingObjectState == FishingData.State.None)
                 {
-                    // 필요 아이템 체크 및 있으면 1개 소모
-                    if (HasNeedItem(11))
+                    FishingObject fishing = (FishingObject)mInteractionObj;
+                    int fishingIndex = fishing.mIndex;
+                    FishingData.State fishingState = UserData.instance.mFishingDataList[fishingIndex].GetState();
+                    
+                    if (fishingState == FishingData.State.None)
                     {
-                        mAnimator.Play("FishingTree_0"); // 낚시 던지기 
+                        // 필요 아이템 체크 및 있으면 1개 소모
+                        if (HasNeedItem(11))
+                        {
+                            mAnimator.Play("FishingTree_0"); // 낚시 던지기 
+
+                            ActionCheck();
+                        }
+                        else
+                        {
+                            Debug.LogFormat("미끼 아이템이 부족합니다.");
+                        }
+                    }
+                    else if (fishingState >= FishingData.State.Start)
+                    {
+                        mAnimator.Play("FishingTree_1"); // 낚시대 당기기 
 
                         ActionCheck();
+
                     }
                     else
                     {
-                        Debug.LogFormat("미끼 아이템이 부족합니다.");
-
-                        return;
+                        /* nothing */
                     }
-
+                    break;
                 }
-                else if (mFishingObjectState >= FishingData.State.Start)
-                {
-                    mAnimator.Play("FishingTree_1"); // 낚시대 당기기 
-
-                    ActionCheck();
-
-                }
-                else
-                {
-                    /* nothing */
-                }
-
-                return;
-
 
             case InteractionObject.ObjectType.Farming:
-
-                if (mFarmObjectState == FarmData.State.None)
                 {
-                    mAnimator.Play("FarmTree");
-
-                    ActionCheck();
-
-                }
-                else if (mFarmObjectState == FarmData.State.Base)
-                {
-                    // 필요 아이템 체크 및 있으면 1개 소모
-                    if (HasNeedItem(10))
+                    FarmObject farm = (FarmObject)mInteractionObj;
+                    int farmIndex = farm.mIndex;
+                    FarmData.State farmState = UserData.instance.mFarmDataList[farmIndex].GetState();
+                    if (farmState == FarmData.State.None)
                     {
-                        mAnimator.Play("FarmTree_2");
+                        mAnimator.Play("FarmTree");
+
+                        ActionCheck();
+
+                    }
+                    else if (farmState == FarmData.State.Base)
+                    {
+                        // 필요 아이템 체크 및 있으면 1개 소모
+                        if (HasNeedItem(10))
+                        {
+                            mAnimator.Play("FarmTree_2");
+
+                            ActionCheck();
+                        }
+                        else
+                        {
+                            Debug.LogFormat("씨앗 아이템이 부족합니다.");
+                        }
+                    }
+                    else if (farmState == FarmData.State.Done)
+                    {
+                        mAnimator.Play("FarmTree");
 
                         ActionCheck();
                     }
                     else
                     {
-                        Debug.LogFormat("씨앗 아이템이 부족합니다.");
-
-                        return;
+                        /* nothing */
                     }
-
+                    break;
                 }
-                else if (mFarmObjectState == FarmData.State.Done)
-                {
-                    mAnimator.Play("FarmTree");
-
-                    ActionCheck();
-                }
-                else
-                {
-                    /* nothing */
-                }
-
-                return;
-
         }
     }
 
@@ -328,14 +322,6 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    public void GameSceneLoad()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
-    public void HouseSceneLoad()
-    {
-        SceneManager.LoadScene("HouseScene");
-    }
     public void ActionCheck()
     {
 
@@ -349,9 +335,6 @@ public class PlayerMovement : MonoBehaviour
         if (mInteractionObj.mType == InteractionObject.ObjectType.Fishing)
         {
             FishingObject fishing = (FishingObject)mInteractionObj;
-
-      
-
             fishing.UpdateState();
 
         }
@@ -359,9 +342,18 @@ public class PlayerMovement : MonoBehaviour
         if (mInteractionObj.mType == InteractionObject.ObjectType.Npc)
         {
             NpcObject npc = (NpcObject)mInteractionObj;
-
             npc.UpdateState();
         }
     }
 
+
+
+    public void GameSceneLoad()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+    public void HouseSceneLoad()
+    {
+        SceneManager.LoadScene("HouseScene");
+    }
 }

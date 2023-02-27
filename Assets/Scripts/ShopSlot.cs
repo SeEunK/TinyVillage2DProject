@@ -21,6 +21,7 @@ public class ShopSlot : MonoBehaviour
 
     public enum State { None, SoldOut}
     public State mState = State.None;
+
     public void SetSlot(int index, ShopData product)
     {
         this.mIndex = index;
@@ -67,8 +68,7 @@ public class ShopSlot : MonoBehaviour
                 if (mProduct.GetCount() > 0)
                 {
                     mTextItemCount.text = mProduct.GetCount().ToString();
-                    //AmountPopup amountPopup = UIManager.instance.GetAmountPopup();
-                    //amountPopup.UpdateMaxValue();
+         
 
                 }
                 else if (mProduct.GetCount() == 0)

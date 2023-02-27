@@ -68,5 +68,6 @@ public class NpcShop : MonoBehaviour
     public void CloseShopPopup()
     {
         this.gameObject.SetActive(false);
+        
     }
 }

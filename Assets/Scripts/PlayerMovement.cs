@@ -244,14 +244,24 @@ public class PlayerMovement : MonoBehaviour
 
                 if (mFishingObjectState == FishingData.State.None)
                 {
-                    mAnimator.Play("FishingTree_0"); // 낚시 던지기 
+                    // 필요 아이템 체크 및 있으면 1개 소모
+                    if (HasNeedItem(11))
+                    {
+                        mAnimator.Play("FishingTree_0"); // 낚시 던지기 
 
-                    ActionCheck();
+                        ActionCheck();
+                    }
+                    else
+                    {
+                        Debug.LogFormat("미끼 아이템이 부족합니다.");
+
+                        return;
+                    }
 
                 }
                 else if (mFishingObjectState >= FishingData.State.Start)
                 {
-                    mAnimator.Play("FishingTree_1"); // 낚시대 땅기기 
+                    mAnimator.Play("FishingTree_1"); // 낚시대 당기기 
 
                     ActionCheck();
 
@@ -275,9 +285,19 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (mFarmObjectState == FarmData.State.Base)
                 {
-                    mAnimator.Play("FarmTree_2");
+                    // 필요 아이템 체크 및 있으면 1개 소모
+                    if (HasNeedItem(10))
+                    {
+                        mAnimator.Play("FarmTree_2");
 
-                    ActionCheck();
+                        ActionCheck();
+                    }
+                    else
+                    {
+                        Debug.LogFormat("씨앗 아이템이 부족합니다.");
+
+                        return;
+                    }
 
                 }
                 else if (mFarmObjectState == FarmData.State.Done)
@@ -295,6 +315,19 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
+
+    public bool HasNeedItem(int id)
+    {
+       if(UserData.instance.GetItemByID(id) != null)
+        {
+            UserData.instance.RemoveItemByItemIndex(id); // 아이템 차감
+            UIManager.instance.GetInventory().UpdateInventoryList(); //인벤 갱신
+
+            return true;
+        }
+        return false;
+    }
+
     public void GameSceneLoad()
     {
         SceneManager.LoadScene("GameScene");
@@ -317,14 +350,7 @@ public class PlayerMovement : MonoBehaviour
         {
             FishingObject fishing = (FishingObject)mInteractionObj;
 
-            // FishingData.State state = UserData.instance.mFishingDataList[fishing.mIndex].GetState();
-
-            // start --> Bait 변경은 fish update 에서 시간 체크 후 자동으롷 addStep 해주는데, 액션 누른경우 낚시 캔슬 
-            //if (state == FishingData.State.Start)
-            //{
-            //    UserData.instance.mFishingDataList[fishing.mIndex].SetState(FishingData.State.None);
-            //    return;
-            //}
+      
 
             fishing.UpdateState();
 

@@ -148,6 +148,25 @@ public class QuestCell : MonoBehaviour
                 // 업데이트
                 this.UpdateQuestCell(mData.mConditionType);
             }
+            else //보상 받을수없을때 클릭시 info popup 출력
+            {
+                switch (mData.mRewardType)
+                {
+                    case QuestData.RewardType.Item:
+                        UIManager.instance.GetItemInfoPopup().UpdateItemInfo(mData.mReward, mData.mReawardCount, ItemInfoPopup.PopupType.Reward);
+                        UIManager.instance.SetItemInfoPopup(true);
+                        break;
+                    case QuestData.RewardType.Gold:
+                        //골드 리워드용 item 추가
+                        Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+                        Sprite itemIcon = itemImages[10];
+                        ItemData getItem = new ItemData(99, "gold", itemIcon, 9999);
+
+                        UIManager.instance.GetItemInfoPopup().UpdateItemInfo(getItem, mData.mReawardCount, ItemInfoPopup.PopupType.Reward);
+                        UIManager.instance.SetItemInfoPopup(true);
+                        break;
+                }
+            }
         }
         else
         {

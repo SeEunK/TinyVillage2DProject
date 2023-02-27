@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public const int INVEN_SlOT_MAX_COUNT = 20;
-   
 
     [SerializeField]
     private int mHorizontalSlotCount = 0;
@@ -18,13 +17,22 @@ public class Inventory : MonoBehaviour
     public RectTransform mContentAreaRectTransform;
     public GameObject mSlotPrefab;
 
+
+    // 정렬 버튼 
+    public GameObject mSortBtnObj = null;
+    public TMP_Text mTxtSortBtn = null;
+
+    public bool mIsAscending = false; // falae : 내림 차순 true : 오름 차순 구분용 
+
     private List<Slot> mSlotList = new List<Slot>();
-    private Slot[] mSlotArray = new Slot[INVEN_SlOT_MAX_COUNT];
+ 
 
     private void Awake()
     {
         mHorizontalSlotCount = mInventoryGridLayoutGroup.constraintCount;
         mVerticalSlotCount = 4;
+        mIsAscending = false;
+        UpdateSortButton();
         InitSlots();
 
     }
@@ -86,9 +94,55 @@ public class Inventory : MonoBehaviour
 
     }
 
+    public void ItemSort()
+    {
+        // 슬롯 리스트 1개 이하 sort 진행 없음.
+        if(mSlotList[0].GetItem() == null || mSlotList[1].GetItem() == null)
+        {
+            return;
+        }
+        // 내림차순
+        if (mIsAscending == false)
+        {
+            mIsAscending = true;
+            // 오름차순 버튼으로 토글
+            UpdateSortButton();
+
+            // 유저 데이터의 아이템 내림차순 정렬.
+            UserData.instance.ItemSortInDesceding();
+
+            // 정렬 변경된 유저 데이터에 맞춰서 인벤 갱신
+            UpdateInventoryList();
+        }
+        // 오름차순
+        else
+        {
+            mIsAscending = false;
+            // 내림차순 버튼으로 토글
+            UpdateSortButton();
+
+            // 유저 데이터 아이템 오름차순 정렬 진행
+            UserData.instance.ItemSortInAscending();
+
+            // 변경된 유저 데이터에 맞춰서 인벤 갱신
+            UpdateInventoryList();
+        }
+    }
+    public void UpdateSortButton()
+    {
+        if (mIsAscending == false)
+        {
+            mTxtSortBtn.text = "Sort ▼";
+        }
+        else
+        {
+            mTxtSortBtn.text = "Sort ▲";
+        }
+    }
 
     public void CloseInventory()
     {
         UIManager.instance.mInventroy.SetActive(false);
+        UIManager.instance.SetItemInfoPopup(false);
     }
 }

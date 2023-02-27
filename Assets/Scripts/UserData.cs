@@ -23,6 +23,20 @@ public class UserData : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             mGold = 1000000;
+
+            {// Å×½ºÆ®¿ë ¾¾¾Ñ Áö±Þ
+                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+                Sprite itemIcon = itemImages[1];
+                ItemData getItem = new ItemData(10, "¾¾¾Ñ", itemIcon, 99);
+                AddItem(getItem);
+            }
+
+            {// Å×½ºÆ®¿ë ¹Ì³¢ Áö±Þ
+                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+                Sprite itemIcon = itemImages[16];
+                ItemData getItem = new ItemData(11, "¹Ì³¢", itemIcon, 99);
+                AddItem(getItem);
+            }
         }
         else
         {
@@ -92,11 +106,19 @@ public class UserData : MonoBehaviour
     }
     public void RemoveItemByItemIndex(int itemID)
     {
+
         for (int i = 0; i < mItemDataList.Count; i++)
         {
             if (mItemDataList[i].mId == itemID)
             {
-                mItemDataList.RemoveAt(i);
+                if (mItemDataList[i].mCount > 1)
+                {
+                    mItemDataList[i].ReduceCount();
+                }
+                else
+                {
+                    mItemDataList.RemoveAt(i);
+                }
                 return;
             }
         }
@@ -108,6 +130,25 @@ public class UserData : MonoBehaviour
     }
 
 
+    public void ItemSortInDesceding()
+    {
+        mItemDataList.Sort(delegate (ItemData A, ItemData B)
+        {
+                if (A.mCount < B.mCount) return 1;
+                else if (A.GetCount() > B.GetCount()) return -1;
+                return 0;
 
+        });
+    }
 
+    public void ItemSortInAscending()
+    {
+        mItemDataList.Sort(delegate (ItemData A, ItemData B)
+        {
+            if (A.mCount < B.mCount) return -1;
+            else if (A.GetCount() > B.GetCount()) return 1;
+            return 0;
+
+        });
+    }
 }

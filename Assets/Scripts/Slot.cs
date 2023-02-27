@@ -107,8 +107,10 @@ public class Slot : MonoBehaviour
         if (mItem != null)
         {
             Debug.LogFormat("OnSelectItem : {0}", mItem.mName);
-       
-            
+
+            UIManager.instance.GetItemInfoPopup().UpdateItemInfo(mItem, mItem.GetCount(), ItemInfoPopup.PopupType.Inven);
+            UIManager.instance.SetItemInfoPopup(true);
+
         }
 
         Debug.Log("OnSelectItem");

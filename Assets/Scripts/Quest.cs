@@ -69,6 +69,7 @@ public class Quest : MonoBehaviour
     public void CloseQuestMenu()
     {
         this.gameObject.SetActive(false);
+        UIManager.instance.SetItemInfoPopup(false);
     }
 
 }

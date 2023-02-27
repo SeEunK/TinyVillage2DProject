@@ -215,11 +215,6 @@ public class Slime : Enemy
                 {
                     if (IsDieAtionEnd(Time.deltaTime))
                     {
-                        Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
-                        Sprite itemIcon = itemImages[4];
-                        ItemData getItem = new ItemData(4, "초록색 이파리", itemIcon, 99);
-                        UserData.instance.AddItem(getItem);
-
                         mSpawner.PushSlime(this.gameObject);
                         Init(mStartPos);
                     }
@@ -283,6 +278,11 @@ public class Slime : Enemy
         mImgHp.enabled = false;
         mAnimator.SetTrigger("IsDead");
         QuestManager.instance.AddAccCount(QuestData.QuestConditionType.MonsterKill, 1);
+
+        Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+        Sprite itemIcon = itemImages[4];
+        ItemData getItem = new ItemData(4, "초록색 이파리", itemIcon, 99);
+        UserData.instance.AddItem(getItem);
 
     }
 

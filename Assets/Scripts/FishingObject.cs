@@ -94,7 +94,6 @@ public class FishingObject : InteractionObject
             UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.None);
 
         }
-
     
         UpdateSprite();
     }
@@ -175,8 +174,18 @@ public class FishingObject : InteractionObject
                 Debug.Log("fish run");
                 Init();
 
-                UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.Start); // 놓쳐서 다시 시작 상태로 변경
-                UpdateSprite();
+                if (PlayerMovement.Instance.HasNeedItem(11))
+                {
+                    UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.Start); // 놓쳐서 다시 시작 상태로 변경
+                    UpdateSprite();
+                }
+                else
+                {
+                    Debug.LogFormat("미끼 아이템이 부족합니다.");
+
+                    UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.None); //미끼없어서 다시 자동 시작 안됨.
+                    UpdateSprite();
+                }
             }
         }
 

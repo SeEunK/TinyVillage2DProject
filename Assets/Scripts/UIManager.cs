@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     private NpcShop mNpcShop = null;
     private AmountPopup mAmountPopup = null;
     private Quest mQuestPopup = null;
-
+    private ItemInfoPopup mItemInfoPopup = null;
 
     void Awake()
     {
@@ -52,6 +52,10 @@ public class UIManager : MonoBehaviour
         mQuestPopup = QuestPopup.GetComponent<Quest>();
         mQuestPopup.InitQuest();
 
+        GameObject ItemInfoPopup = this.transform.Find("ItemInfoPopup").gameObject;
+        mItemInfoPopup = ItemInfoPopup.GetComponent<ItemInfoPopup>();
+
+
         SetAmountPopup(false);
         SetActionButton(false);
         SetInventoryUI(false);
@@ -60,9 +64,14 @@ public class UIManager : MonoBehaviour
         SetPlayerInfo(false);
         SetQuestPopup(false);
         SetQuestButton(false);
+        SetItemInfoPopup(false);
 
     }
 
+    public void SetItemInfoPopup(bool value)
+    {
+        mItemInfoPopup.SetActiveItemInfoPopup(value);
+    }
     public void SetQuestPopup(bool value)
     {
         mQuestPopup.SetQuestMenu(value);
@@ -121,5 +130,14 @@ public class UIManager : MonoBehaviour
         return mQuestPopup;
     }
 
+    public ItemInfoPopup GetItemInfoPopup()
+    {
+        return mItemInfoPopup;
+    }
+
+    public Inventory GetInventory()
+    {
+        return mInventroy.GetComponent<Inventory>();
+    }
 
 }

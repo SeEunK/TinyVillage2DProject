@@ -5,14 +5,14 @@ using UnityEngine;
 public class TabController : MonoBehaviour
 {
 
-    public TabButton mSelectedTabButton = null;
+    public KsTabButton mSelectedTabButton = null;
 
     private void Start()
     {
         SelectButton(mSelectedTabButton);
 
     }
-    public void SelectButton(TabButton button)
+    public void SelectButton(KsTabButton button)
     {
         if(mSelectedTabButton != null)
         {

@@ -18,8 +18,6 @@ public class Slot : MonoBehaviour
     private TMP_Text mTextItemCount;
 
     private int mIndex;
-
-
    
     public void SetIndex(int index)
     {
@@ -108,8 +106,26 @@ public class Slot : MonoBehaviour
         {
             Debug.LogFormat("OnSelectItem : {0}", mItem.mName);
 
-            UIManager.instance.GetItemInfoPopup().UpdateItemInfo(mItem, mItem.GetCount(), ItemInfoPopup.PopupType.Inven);
-            UIManager.instance.SetItemInfoPopup(true);
+            Inventory.State state = UIManager.instance.GetInventory().GetState();
+
+            // 가방 --> 아이템 정보창 여는 경우
+            switch (state)
+            {
+                case Inventory.State.None:
+                    UIManager.instance.GetItemInfoPopup().UpdateItemInfo(mItem, mItem.GetCount(), ItemInfoPopup.PopupType.Inven);
+                    UIManager.instance.SetItemInfoPopup(true);
+                    break;
+                case Inventory.State.Buy:
+                    UIManager.instance.GetItemInfoPopup().UpdateItemInfo(mItem, mItem.GetCount(), ItemInfoPopup.PopupType.Reward);
+                    UIManager.instance.SetItemInfoPopup(true);
+                    break;
+
+                case Inventory.State.Sell:
+                    UIManager.instance.GetItemInfoPopup().UpdateItemInfo(mItem, mItem.GetCount(), ItemInfoPopup.PopupType.Shop);
+                    UIManager.instance.SetItemInfoPopup(true);
+                    break;
+
+            }
 
         }
 

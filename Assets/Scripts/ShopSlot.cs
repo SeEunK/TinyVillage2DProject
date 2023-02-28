@@ -22,6 +22,7 @@ public class ShopSlot : MonoBehaviour
     public enum State { None, SoldOut}
     public State mState = State.None;
 
+    public NpcShop.ShopType mType = NpcShop.ShopType.Buy;
     public void SetSlot(int index, ShopData product)
     {
         this.mIndex = index;
@@ -116,8 +117,9 @@ public class ShopSlot : MonoBehaviour
         }
 
         AmountPopup amountPopup = UIManager.instance.GetAmountPopup();
-        amountPopup.SetPopupInit(this.gameObject,mProduct);
-        
+        //amountPopup.SetPopupInit(this.gameObject,mProduct);
+        amountPopup.SetPopupInit(this.gameObject, NpcShop.ShopType.Buy);
+
         UIManager.instance.SetAmountPopup(true);
     }
 }

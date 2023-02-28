@@ -241,10 +241,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e16de6925ef5c40a1448a9b30698c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mTabButtonBuy: {fileID: 758292402}
+  mTabButtonSell: {fileID: 871906467}
+  mBuyPanel: {fileID: 1751093706}
+  mSellPanel: {fileID: 560998506}
+  mSelectedColor: {r: 0.32156864, g: 0.21960784, b: 0.12156863, a: 1}
+  mUnSelectedColor: {r: 0.27058825, g: 0.23137255, b: 0.1764706, a: 1}
   mShopContentsArea: {fileID: 1126659721}
   mSlotPrefab: {fileID: 6451110869414318693, guid: 57c494912066fe54face8686dded2424, type: 3}
   mShopSellContentsArea: {fileID: 1230375984}
   mSellSlotPrefab: {fileID: 6451110869414318693, guid: e44f7626fce90aa4e89267f2e2e3f039, type: 3}
+  mTxtTotalSellPrice: {fileID: 335377182}
+  mBtnSellDecision: {fileID: 465935562}
 --- !u!1 &12866928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2466,7 +2474,7 @@ GameObject:
   - component: {fileID: 465935563}
   - component: {fileID: 465935562}
   m_Layer: 5
-  m_Name: btnSell
+  m_Name: btnDecision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2536,7 +2544,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 465935563}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11410512}
+        m_TargetAssemblyTypeName: NpcShop, Assembly-CSharp
+        m_MethodName: OnSellItems
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &465935563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2611,7 +2631,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 230}
+  m_SizeDelta: {x: 200, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496699718
 MonoBehaviour:
@@ -2663,7 +2683,7 @@ GameObject:
   - component: {fileID: 523603386}
   - component: {fileID: 523603385}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtUISellPrice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2946,7 +2966,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555648244}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 231, y: 0, z: 0}
+  m_LocalPosition: {x: 300, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2977,6 +2997,7 @@ MonoBehaviour:
   mSortBtnObj: {fileID: 2039986220}
   mTxtSortBtn: {fileID: 1358512087}
   mIsAscending: 0
+  mState: 0
 --- !u!1 &560998506
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,7 +3037,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -24}
+  m_AnchoredPosition: {x: -46, y: -24}
   m_SizeDelta: {x: 420, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &560998508
@@ -3418,7 +3439,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -46, y: 0}
   m_SizeDelta: {x: 450, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &614889036
@@ -4376,7 +4397,6 @@ GameObject:
   - component: {fileID: 758292404}
   - component: {fileID: 758292403}
   - component: {fileID: 758292402}
-  - component: {fileID: 758292405}
   m_Layer: 5
   m_Name: btnBuy
   m_TagString: Untagged
@@ -4426,10 +4446,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.27058825, g: 0.23137257, b: 0.1764706, a: 1}
-    m_HighlightedColor: {r: 0.3584906, g: 0.29155543, b: 0.19784622, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.32156864, g: 0.21960786, b: 0.121568635, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4449,13 +4469,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 786909296}
-        m_TargetAssemblyTypeName: TabController, Assembly-CSharp
-        m_MethodName: SelectButton
-        m_Mode: 2
+      - m_Target: {fileID: 11410512}
+        m_TargetAssemblyTypeName: NpcShop, Assembly-CSharp
+        m_MethodName: OpenBuyTab
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 758292405}
-          m_ObjectArgumentAssemblyTypeName: TabButton, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4499,50 +4519,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 758292400}
   m_CullTransparentMesh: 1
---- !u!114 &758292405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758292400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e49a685857d7c4aa2b1726f51508a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onTabSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1751093706}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  onTabUnselected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1751093706}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  mTabController: {fileID: 786909296}
-  mButton: {fileID: 758292402}
 --- !u!1 &762964137
 GameObject:
   m_ObjectHideFlags: 0
@@ -4629,7 +4605,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 786909295}
-  - component: {fileID: 786909296}
   m_Layer: 5
   m_Name: Tabs
   m_TagString: Untagged
@@ -4656,22 +4631,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -46, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &786909296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786909294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7d7a54eb7a5684a9c6bdb85ca1414f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mSelectedTabButton: {fileID: 758292405}
 --- !u!1 &807489011
 GameObject:
   m_ObjectHideFlags: 0
@@ -5375,7 +5337,6 @@ GameObject:
   - component: {fileID: 871906469}
   - component: {fileID: 871906468}
   - component: {fileID: 871906467}
-  - component: {fileID: 871906470}
   m_Layer: 5
   m_Name: btnSell
   m_TagString: Untagged
@@ -5425,10 +5386,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.27058825, g: 0.23137257, b: 0.1764706, a: 1}
-    m_HighlightedColor: {r: 0.35686275, g: 0.2901961, b: 0.19607843, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.32156864, g: 0.21960786, b: 0.121568635, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5448,13 +5409,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 786909296}
-        m_TargetAssemblyTypeName: TabController, Assembly-CSharp
-        m_MethodName: SelectButton
-        m_Mode: 2
+      - m_Target: {fileID: 11410512}
+        m_TargetAssemblyTypeName: NpcShop, Assembly-CSharp
+        m_MethodName: OpenSellTab
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 871906470}
-          m_ObjectArgumentAssemblyTypeName: TabButton, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5498,50 +5459,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871906465}
   m_CullTransparentMesh: 1
---- !u!114 &871906470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 871906465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e49a685857d7c4aa2b1726f51508a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onTabSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 560998506}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  onTabUnselected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 560998506}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  mTabController: {fileID: 786909296}
-  mButton: {fileID: 871906467}
 --- !u!1 &881006120
 GameObject:
   m_ObjectHideFlags: 0
@@ -5923,7 +5840,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 3}
-  m_SizeDelta: {x: 190, y: 150}
+  m_SizeDelta: {x: 190, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &952935258
 MonoBehaviour:
@@ -6061,7 +5978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 136}
+  m_AnchoredPosition: {x: -46, y: 136}
   m_SizeDelta: {x: 450, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1008760384
@@ -6591,7 +6508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -115.3}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1064592078
@@ -6669,7 +6586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 114.7}
+  m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1083225199
@@ -8644,6 +8561,7 @@ MonoBehaviour:
   mTxtTotal: {fileID: 100800196}
   mBtnCancel: {fileID: 945764204}
   mBtnOK: {fileID: 1040411297}
+  mType: 0
 --- !u!1 &1650125278
 GameObject:
   m_ObjectHideFlags: 0
@@ -9240,7 +9158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -46, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1766372270
@@ -10058,6 +9976,7 @@ MonoBehaviour:
     mImage: {fileID: 0}
     mMaxStackCount: 0
     mCount: 0
+    mSellPrice: 0
   mBtnObj: {fileID: 219891651}
   mTxtBtnText: {fileID: 847878600}
 --- !u!1 &2068896403

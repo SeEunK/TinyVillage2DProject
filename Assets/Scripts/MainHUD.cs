@@ -146,8 +146,7 @@ public class MainHUD: MonoBehaviour
     public void OpenInventory()
     {
         Inventory inven = UIManager.instance.mInventroy.GetComponent<Inventory>();
-        inven.UpdateInventoryList();
-        UIManager.instance.mInventroy.SetActive(true);
+        inven.Open();
 
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class TabButton : MonoBehaviour
+public class KsTabButton : MonoBehaviour
 {
     public UnityEvent onTabSelected;
     public UnityEvent onTabUnselected;
@@ -31,7 +31,7 @@ public class TabButton : MonoBehaviour
         }
     }
 
-    public void OnSelectTab(TabButton button)
+    public void OnSelectTab(KsTabButton button)
     {
         mTabController.SelectButton(button);
     }

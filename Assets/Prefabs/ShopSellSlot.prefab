@@ -29,15 +29,16 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5469689486216660154}
   m_Father: {fileID: 6451110869414318692}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -44.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 15}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &2213318223691246825
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -106,14 +107,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6451110869414318692}
-  m_RootOrder: 2
+  m_Father: {fileID: 7473983500629128287}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -41.9}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 20}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4498910012084150390
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -244,7 +245,6 @@ RectTransform:
   m_Children:
   - {fileID: 6451110870547066574}
   - {fileID: 7473983500629128287}
-  - {fileID: 5469689486216660154}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -303,6 +303,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3526fcdef037d34caddfe330a6d345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mIndex: 0
+  mItem:
+    mId: 0
+    mName: 
+    mImage: {fileID: 0}
+    mMaxStackCount: 0
+    mCount: 0
+    mSellPrice: 0
+  mCountBg: {fileID: 108212302078649907}
+  mItemCount: 0
+  mTextItemCount: {fileID: 5816287178355495719}
+  mItemImage: {fileID: 6451110870106375092}
 --- !u!1 &6451110870106375082
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,14 +374,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26566395, g: 0.2734033, b: 0.2830189, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a6fbd5a181bc51e42a61a73fe8d727c8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ae8c14e6c4ab54e43878332106914645, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -501,9 +513,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShopSlot, Assembly-CSharp
-        m_MethodName: ShopSlotClick
+      - m_Target: {fileID: -91557746617482817}
+        m_TargetAssemblyTypeName: ShopSellSlot, Assembly-CSharp
+        m_MethodName: UnSetSellSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

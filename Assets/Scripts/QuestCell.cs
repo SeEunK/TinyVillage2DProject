@@ -160,7 +160,7 @@ public class QuestCell : MonoBehaviour
                         //골드 리워드용 item 추가
                         Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
                         Sprite itemIcon = itemImages[10];
-                        ItemData getItem = new ItemData(99, "gold", itemIcon, 9999);
+                        ItemData getItem = new ItemData(99, "gold", itemIcon, 9999, -1);
 
                         UIManager.instance.GetItemInfoPopup().UpdateItemInfo(getItem, mData.mReawardCount, ItemInfoPopup.PopupType.Reward);
                         UIManager.instance.SetItemInfoPopup(true);

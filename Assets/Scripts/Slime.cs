@@ -281,7 +281,7 @@ public class Slime : Enemy
 
         Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
         Sprite itemIcon = itemImages[4];
-        ItemData getItem = new ItemData(4, "초록색 이파리", itemIcon, 99);
+        ItemData getItem = new ItemData(4, "초록색 이파리", itemIcon, 99, 30);
         UserData.instance.AddItem(getItem);
 
     }

@@ -25,12 +25,15 @@ public class Inventory : MonoBehaviour
     public bool mIsAscending = false; // falae : 내림 차순 true : 오름 차순 구분용 
 
     private List<Slot> mSlotList = new List<Slot>();
- 
+
+    public enum State { None, Buy, Sell }
+    public State mState = State.None;
 
     private void Awake()
     {
         mHorizontalSlotCount = mInventoryGridLayoutGroup.constraintCount;
         mVerticalSlotCount = 4;
+        mState = State.None;
         mIsAscending = false;
         UpdateSortButton();
         InitSlots();
@@ -53,12 +56,20 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    
+    public State GetState()
+    {
+        return mState;
+    }
+
+    public void SetState(State state)
+    {
+        mState = state;
+    }
 
     public void ItemRemove(int index)
     {
         ItemData item = mSlotList[index].GetItem();
-      
+
 
         if (item.GetCount() > 1)
         {
@@ -97,7 +108,7 @@ public class Inventory : MonoBehaviour
     public void ItemSort()
     {
         // 슬롯 리스트 1개 이하 sort 진행 없음.
-        if(mSlotList[0].GetItem() == null || mSlotList[1].GetItem() == null)
+        if (mSlotList[0].GetItem() == null || mSlotList[1].GetItem() == null)
         {
             return;
         }
@@ -140,9 +151,16 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void Open()
+    {
+        UpdateInventoryList();
+        this.gameObject.SetActive(true);
+    }
+
     public void CloseInventory()
     {
-        UIManager.instance.mInventroy.SetActive(false);
+        this.gameObject.SetActive(false);
+        //UIManager.instance.mInventroy.SetActive(false);
         UIManager.instance.SetItemInfoPopup(false);
     }
 }

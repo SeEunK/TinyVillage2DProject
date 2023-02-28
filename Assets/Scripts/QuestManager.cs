@@ -42,7 +42,7 @@ public class QuestManager : MonoBehaviour
         // item reward 용 임시로 하나 생성.
         Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
         Sprite itemIcon = itemImages[13];
-        ItemData rewardItem = new ItemData(1, "무", itemIcon, 99);
+        ItemData rewardItem = new ItemData(1, "무", itemIcon, 99, 20);
 
         // monster kill quest 
         List<QuestData> monsterKillQestList = new List<QuestData>();

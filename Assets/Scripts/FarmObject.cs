@@ -75,7 +75,7 @@ public class FarmObject : InteractionObject
         {
             Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
             Sprite itemIcon = itemImages[13];
-            ItemData getItem = new ItemData(1,"¹«", itemIcon,  99);
+            ItemData getItem = new ItemData(1,"¹«", itemIcon,  99,20);
             UserData.instance.AddItem(getItem);
 
             QuestManager.instance.AddAccCount(QuestData.QuestConditionType.Farming, 1);

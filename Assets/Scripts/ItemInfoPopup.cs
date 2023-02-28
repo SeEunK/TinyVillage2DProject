@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -90,27 +91,47 @@ public class ItemInfoPopup : MonoBehaviour
 
             case PopupType.Shop:
                 {
-                    // 아이템 판매가격 필요 
-
-                    // 아이템 차감
-                    UserData.instance.RemoveItemByItemIndex(mItem.GetID());
-
-                    if (UserData.instance.GetItemByID(mItem.GetID()) != null)
+                    int selectCount = 1;
+                    if (mItem.IsStackItem() && mItem.GetCount() > 1)
                     {
-                        // 아이템 정보창 갱신
-                        UpdateItemInfo(mItem, mItem.GetCount(), PopupType.Shop);
+                        SetActiveItemInfoPopup(false);
+                        //수량 선택 팝업 오픈
+                        AmountPopup amountPopup = UIManager.instance.GetAmountPopup();
+                        amountPopup.SetPopupInit(this.gameObject, NpcShop.ShopType.Sell);
+
+                        UIManager.instance.SetAmountPopup(true);
                     }
                     else
                     {
-                        SetActiveItemInfoPopup(false);
-                    }
+                        // sell slote 에 아이템 세팅.
+                        UIManager.instance.GetNpcShop().SelectSellItem(mItem, selectCount);
 
-                    // 인벤토리 갱신
-                    UIManager.instance.GetInventory().UpdateInventoryList();
+                        // 아이템 차감
+                        UserData.instance.RemoveItemByItemIndex(mItem.GetID());
+
+                        if (UserData.instance.GetItemByID(mItem.GetID()) != null)
+                        {
+
+                            // 아이템 정보창 갱신
+                            UpdateItemInfo(mItem, mItem.GetCount(), PopupType.Shop);
+                        }
+                        else
+                        {
+                            SetActiveItemInfoPopup(false);
+                        }
+
+                        // 인벤토리 갱신
+                        UIManager.instance.GetInventory().UpdateInventoryList();
+                    }
                 }
                 break;
         }
 
+    }
+
+    public ItemData GetItem()
+    {
+        return mItem;
     }
 
     public void SetActiveItemInfoPopup(bool value)

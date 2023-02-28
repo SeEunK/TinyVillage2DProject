@@ -11,17 +11,22 @@ public class ItemData
     public Sprite mImage;
     public int mMaxStackCount;
     public int mCount;
-
-    public ItemData(int index, string name, Sprite image,  int MaxStackCount)
+    public int mSellPrice;
+    public ItemData(int index, string name, Sprite image,  int MaxStackCount, int sellprice)
     {
         mId = index; 
         mName = name; 
         mImage = image;
         mMaxStackCount = MaxStackCount;
         mCount = 1;
+        mSellPrice = sellprice;
     }
 
  
+    public int GetSellPrice()
+    {
+        return mSellPrice;
+    }
     public int GetID()
     {
         return mId;

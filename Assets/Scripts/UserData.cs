@@ -28,15 +28,23 @@ public class UserData : MonoBehaviour
                 Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
                 Sprite itemIcon = itemImages[1];
                 ItemData getItem = new ItemData(10, "¾¾¾Ñ", itemIcon, 99, 100);
-                AddItem(getItem);
+                for (int i = 0; i < 5; i++)
+                {
+                    AddItem(getItem);
+                }
             }
 
             {// Å×½ºÆ®¿ë ¹Ì³¢ Áö±Þ
                 Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
                 Sprite itemIcon = itemImages[16];
                 ItemData getItem = new ItemData(11, "¹Ì³¢", itemIcon, 99, 50);
-                AddItem(getItem);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    AddItem(getItem);
+                }
             }
+           
         }
         else
         {

@@ -107,8 +107,12 @@ public class FarmObject : InteractionObject
                 mRenderer.sprite = mSprites[2];
                 UIManager.instance.GetMainHud().UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
                 break;
-            case FarmData.State.Done:
+            case FarmData.State.Grow:
                 mRenderer.sprite = mSprites[3];
+                UIManager.instance.GetMainHud().UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
+                break;
+            case FarmData.State.Done:
+                mRenderer.sprite = mSprites[4];
                 UIManager.instance.GetMainHud().UpdateFarmActionButtonSprite(UserData.instance.mFarmDataList[mIndex].GetState());
                 break;
         }
@@ -127,6 +131,9 @@ public class FarmObject : InteractionObject
                 UserData.instance.mFarmDataList[mIndex].SetState(FarmData.State.Wait);
                 break;
             case FarmData.State.Wait:
+                UserData.instance.mFarmDataList[mIndex].SetState(FarmData.State.Grow);
+                break;
+            case FarmData.State.Grow:
                 UserData.instance.mFarmDataList[mIndex].SetState(FarmData.State.Done);
                 break;
             case FarmData.State.Done:
@@ -139,16 +146,28 @@ public class FarmObject : InteractionObject
 
     private void Update()
     {
+        if (UserData.instance.mFarmDataList[mIndex].GetState() >= FarmData.State.Wait)
+        {
+            mTimer += Time.deltaTime;
+            mImgWait.fillAmount = (float)(mTimer / mTurm); // 이것도 나중에 시간 베이스 계산으로 바꿔야함
+        }
+
         if (UserData.instance.mFarmDataList[mIndex].GetState() == FarmData.State.Wait)
+        {
+            if (UserData.instance.mFarmDataList[mIndex].IsHalfGrow(mTurm) == true)
+            {
+                AddStep();
+                UpdateSprite();
+            }
+
+        }
+        if (UserData.instance.mFarmDataList[mIndex].GetState() == FarmData.State.Grow)
         {
             if (UserData.instance.mFarmDataList[mIndex].IsGrowComplete(mTurm) == true)
             {
                 AddStep();
                 UpdateSprite();
             }
-
-            mTimer += Time.deltaTime;
-            mImgWait.fillAmount = (float)(mTimer / mTurm); // 이것도 나중에 시간 베이스 계산으로 바꿔야함
 
         }
     }

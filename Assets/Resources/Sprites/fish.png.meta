@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8a0c4de80d73e574182ddabff96e8d99
+guid: 79f5c9b517d9d714eb4a9b3bd8e1d44b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -101,164 +101,131 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: character_fishing_0
+      name: fish_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 50
-        width: 30
-        height: 42
-      alignment: 9
-      pivot: {x: 0.561273, y: 0.00000009082613}
+        x: 59
+        y: 309
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e9af1dc980064849984121cba16d52f
-      internalID: 2001551350
+      spriteID: c230ad908ee4aff498cd2b943a4daf3f
+      internalID: -49955638
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_fishing_1
+      name: fish_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 50
-        width: 29
-        height: 42
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 290
+        y: 302
+        width: 147
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6705da27216c2234e89e2978ade15741
-      internalID: 718699024
+      spriteID: fdf0a044ae892754a8501c4adc540a18
+      internalID: -1262968210
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_fishing_2
+      name: fish_2
       rect:
         serializedVersion: 2
-        x: 68
-        y: 51
-        width: 49
-        height: 40
-      alignment: 9
-      pivot: {x: 0.36548382, y: 0.0031679666}
+        x: 63
+        y: 166
+        width: 147
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96dc4096eb390a44ea72160514c85610
-      internalID: 1497340556
+      spriteID: 42917af98aafa694ca57ad52b4e4eb8b
+      internalID: 2103006251
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_fishing_3
+      name: fish_3
       rect:
         serializedVersion: 2
-        x: 117
-        y: 51
-        width: 61
-        height: 41
-      alignment: 9
-      pivot: {x: 0.21537681, y: 0.017852504}
+        x: 294
+        y: 181
+        width: 140
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66290a55463bafc4ab7d88ecb1b10b19
-      internalID: 1152725763
+      spriteID: 4695e1ae7ab31d146bc0ee030d26c8c3
+      internalID: -473552387
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_fishing_4
+      name: fish_5
       rect:
         serializedVersion: 2
-        x: 178
-        y: 51
-        width: 80
-        height: 41
-      alignment: 9
-      pivot: {x: 0.19776058, y: 0.012075843}
+        x: 82
+        y: 46
+        width: 109
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e490440dfcc9734b8c5baa65ea7c9cf
-      internalID: 870513187
+      spriteID: 52a3a46d214e938408aae4f1bc9a373b
+      internalID: 2103364000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_fishing_7
+      name: fish_6
       rect:
         serializedVersion: 2
-        x: 117
-        y: 12
-        width: 29
-        height: 39
-      alignment: 9
-      pivot: {x: 0.49999967, y: -0.0021262963}
+        x: 286
+        y: 35
+        width: 155
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24e68ae7a5e943445a480261df1528c4
-      internalID: -1463340004
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: character_fishing_8
-      rect:
-        serializedVersion: 2
-        x: 161
-        y: 10
-        width: 88
-        height: 39
-      alignment: 9
-      pivot: {x: 0.20589708, y: 0.041605975}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ca11f496b5263f46a3b4c8a9f1be094
-      internalID: -1522773316
+      spriteID: ef74e2bbaa329214cb1d2497d5cbf498
+      internalID: -997548611
       vertices: []
       indices: 
       edges: []
@@ -274,15 +241,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      character_fishing_3: 1152725763
-      character_fishing_2: 1497340556
-      character_fishing_8: -1522773316
-      character_fishing_1: 718699024
-      character_fishing_4: 870513187
-      character_fishing_7: -1463340004
-      character_fishing_6: -988199665
-      character_fishing_5: 1160836701
-      character_fishing_0: 2001551350
+      fish_3: -473552387
+      fish_5: 2103364000
+      fish_1: -1262968210
+      fish_2: 2103006251
+      fish_6: -997548611
+      fish_4: -1964018177
+      fish_0: -49955638
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

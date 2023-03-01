@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ public class FarmData
         None, // 빈상태
         Base, // 밭 간후
         Wait,  // 성장 진행
+        Grow,  // 성장중
         Done // 성장 완료
     }
 
@@ -40,6 +42,7 @@ public class FarmData
                 mStartTime = 0;
                 break;
             case State.Wait:
+            case State.Grow:
                 mStartTime = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
                 break;
         }
@@ -52,7 +55,7 @@ public class FarmData
 
     public bool IsGrowComplete(double growTime)
     {
-        if(mState != State.Wait)
+        if(mState != State.Grow)
         {
             return false;
         }
@@ -60,6 +63,25 @@ public class FarmData
         double currTime = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
 
         if (mStartTime + growTime <= currTime)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool IsHalfGrow(double growTime)
+    {
+        if (mState != State.Wait)
+        {
+            return false;
+        }
+
+        double currTime = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+
+        double halfTime = growTime / 2;
+        if (mStartTime + halfTime <= currTime)
         {
             return true;
         }

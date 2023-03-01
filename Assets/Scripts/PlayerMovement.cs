@@ -252,11 +252,13 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat("미끼 아이템이 부족합니다.");
+                            
+                            UIManager.instance.SetSystemMessage("미끼 아이템이 부족합니다.");
                         }
                     }
                     else if (fishingState >= FishingData.State.Start)
                     {
+                        mAnimator.SetBool("fishingFinish", true);
                         mAnimator.Play("FishingTree_1"); // 낚시대 당기기 
 
                         ActionCheck();
@@ -292,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat("씨앗 아이템이 부족합니다.");
+                            UIManager.instance.SetSystemMessage("씨앗 아이템이 부족합니다.");
                         }
                     }
                     else if (farmState == FarmData.State.Done)
@@ -346,6 +348,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public Animator GetAnimator()
+    {
+        return mAnimator;
+    }
 
 
     public void GameSceneLoad()

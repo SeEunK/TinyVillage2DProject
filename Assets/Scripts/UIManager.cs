@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     private AmountPopup mAmountPopup = null;
     private Quest mQuestPopup = null;
     private ItemInfoPopup mItemInfoPopup = null;
+    private SystemMessagePopup mSystemMessage = null;
+
 
     void Awake()
     {
@@ -55,7 +57,10 @@ public class UIManager : MonoBehaviour
         GameObject ItemInfoPopup = this.transform.Find("ItemInfoPopup").gameObject;
         mItemInfoPopup = ItemInfoPopup.GetComponent<ItemInfoPopup>();
 
+        GameObject SystemMessagePopup = this.transform.Find("SystemMessage").gameObject;
+        mSystemMessage = SystemMessagePopup.GetComponent<SystemMessagePopup>();
 
+        mSystemMessage.Init();
         SetAmountPopup(false);
         SetActionButton(false);
         SetInventoryUI(false);
@@ -66,6 +71,12 @@ public class UIManager : MonoBehaviour
         SetQuestButton(false);
         SetItemInfoPopup(false);
 
+    }
+
+    public void SetSystemMessage(string message)
+    {
+        mSystemMessage.SetMessageText(message);
+        mSystemMessage.ShowMessage();
     }
 
     public void SetItemInfoPopup(bool value)

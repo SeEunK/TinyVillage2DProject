@@ -89,6 +89,12 @@ public class FishingObject : InteractionObject
         if ( state == FishingData.State.Bait)
         {
             Debug.Log("fishing Success!!!");
+
+            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/fish");
+            Sprite itemIcon = itemImages[4];
+            ItemData getItem = new ItemData(3, "작은 물고기", itemIcon, 99, 30);
+            UserData.instance.AddItem(getItem);
+
             QuestManager.instance.AddAccCount(QuestData.QuestConditionType.Fishing, 1);
             
             UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.None);
@@ -176,12 +182,19 @@ public class FishingObject : InteractionObject
 
                 if (PlayerMovement.Instance.HasNeedItem(11))
                 {
+                    PlayerMovement.Instance.GetAnimator().SetBool("fishingFinish", false);
+                    PlayerMovement.Instance.GetAnimator().SetTrigger("fishingCancel");
                     UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.Start); // 놓쳐서 다시 시작 상태로 변경
+                    
+                    PlayerMovement.Instance.GetAnimator().SetTrigger("fishingRetry");
                     UpdateSprite();
                 }
                 else
                 {
-                    Debug.LogFormat("미끼 아이템이 부족합니다.");
+                    PlayerMovement.Instance.GetAnimator().SetTrigger("fishingCancel");
+                    PlayerMovement.Instance.GetAnimator().SetBool("fishingFinish", true);
+                   
+                    UIManager.instance.SetSystemMessage("미끼 아이템이 부족합니다.");
 
                     UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.None); //미끼없어서 다시 자동 시작 안됨.
                     UpdateSprite();

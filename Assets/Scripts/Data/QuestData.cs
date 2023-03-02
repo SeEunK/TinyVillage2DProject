@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class QuestData
 {
-    public enum QuestConditionType { MonsterKill, Fishing, Farming }
+    public enum QuestConditionType { MonsterKill, Fishing, Farming ,Mining ,Logging }
     public QuestConditionType mConditionType;
 
     public enum RewardType { Gold, Item}

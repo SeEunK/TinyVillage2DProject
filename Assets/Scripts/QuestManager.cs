@@ -32,6 +32,8 @@ public class QuestManager : MonoBehaviour
         mQuestCounts.Add(QuestData.QuestConditionType.MonsterKill, 0);
         mQuestCounts.Add(QuestData.QuestConditionType.Fishing, 0);
         mQuestCounts.Add(QuestData.QuestConditionType.Farming, 0);
+        mQuestCounts.Add(QuestData.QuestConditionType.Mining, 0);
+        mQuestCounts.Add(QuestData.QuestConditionType.Logging, 0);
 
         QuestTableCreate();
 
@@ -95,6 +97,42 @@ public class QuestManager : MonoBehaviour
         }
         mQuestData.Add(QuestData.QuestConditionType.Farming, farmQuest);
         // farm quest ================================================================================
+
+        // Mining quest ================================================================================
+        List<QuestData> MiningQuest = new List<QuestData>();
+        {
+            QuestData quest = new QuestData("step 1. Mining 3 times", QuestData.QuestConditionType.Mining, 3, QuestData.RewardType.Gold, null, 1000);
+            MiningQuest.Add(quest);
+        }
+        {
+            QuestData quest = new QuestData("step 2. Mining 5 times", QuestData.QuestConditionType.Mining, 5, QuestData.RewardType.Gold, null, 3000);
+            MiningQuest.Add(quest);
+        }
+        {
+
+            QuestData quest = new QuestData("step 3. Mining 10 times", QuestData.QuestConditionType.Mining, 10, QuestData.RewardType.Item, rewardItem, 1);
+            MiningQuest.Add(quest);
+        }
+        mQuestData.Add(QuestData.QuestConditionType.Mining, MiningQuest);
+        // Mining quest ================================================================================
+
+        // Logging quest ================================================================================
+        List<QuestData> LoggingQuest = new List<QuestData>();
+        {
+            QuestData quest = new QuestData("step 1. Logging 3 times", QuestData.QuestConditionType.Logging, 3, QuestData.RewardType.Gold, null, 1000);
+            LoggingQuest.Add(quest);
+        }
+        {
+            QuestData quest = new QuestData("step 2. Logging 5 times", QuestData.QuestConditionType.Logging, 5, QuestData.RewardType.Gold, null, 3000);
+            LoggingQuest.Add(quest);
+        }
+        {
+
+            QuestData quest = new QuestData("step 3. Logging 10 times", QuestData.QuestConditionType.Logging, 10, QuestData.RewardType.Item, rewardItem, 1);
+            LoggingQuest.Add(quest);
+        }
+        mQuestData.Add(QuestData.QuestConditionType.Logging, LoggingQuest);
+        // Logging quest ================================================================================
     }
 
     public void AddAccCount(QuestData.QuestConditionType type, int count)

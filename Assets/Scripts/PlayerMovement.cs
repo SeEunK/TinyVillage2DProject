@@ -160,18 +160,7 @@ public class PlayerMovement : MonoBehaviour
         return mMaxHP;
     }
 
-    private IEnumerator WaitAttackAction()
-    {
-        Debug.Log("WaitAttackAction");
 
-        Time.timeScale = 1;
-
-        yield return new WaitForSeconds(0.75f);
-
-        Debug.Log("Wait_end");
-        mAnimator.SetBool("IsAttack", false);
-        mState = State.Active;
-    }
 
     public void SetInteractionObject(InteractionObject interactionObj)
     {
@@ -201,6 +190,11 @@ public class PlayerMovement : MonoBehaviour
                 mGoToZoneName = door.GetGoToZone();
                 break;
 
+            case InteractionObject.ObjectType.Mining:
+                MiningObject miningObj = (MiningObject)mInteractionObj;
+                break;
+
+
         }
 
     }
@@ -213,17 +207,25 @@ public class PlayerMovement : MonoBehaviour
             case InteractionObject.ObjectType.None:
                 return;
 
-            case InteractionObject.ObjectType.Mining:
-
             case InteractionObject.ObjectType.Gathering:
-
-            case InteractionObject.ObjectType.Logging:
 
             case InteractionObject.ObjectType.Npc:
                 ActionCheck();
 
                 break;
+            case InteractionObject.ObjectType.Logging:
+                {
+                    LoggingObject loggingObj = (LoggingObject)mInteractionObj;
+                    int index = loggingObj.mIndex;
+                    LoggingData.State state = UserData.instance.mLoggingDataList[index].GetState();
 
+                    if(state != LoggingData.State.Empty)
+                    {
+                        mAnimator.Play("AxingTree");
+                        ActionCheck();
+                    }
+                    break;
+                }
             case InteractionObject.ObjectType.Doorway:
                 if (mGoToZoneName == ZoneData.Name.House)
                 {
@@ -235,6 +237,25 @@ public class PlayerMovement : MonoBehaviour
                     GameManager.Instance.GameSceneLoad();
                 }
                 break;
+
+            case InteractionObject.ObjectType.Mining:
+                {
+                    MiningObject miningObj = (MiningObject)mInteractionObj;
+                    int index = miningObj.mIndex;
+                    MiningData.State miningState = UserData.instance.mMiningDataList[index].GetState();
+
+                    if(miningState != MiningData.State.Empty)
+                    {
+                        mAnimator.Play("HammeringTree");
+                        ActionCheck();
+                    }
+                    else
+                    {
+                        Debug.Log("비어있음");
+                    }
+                    break;
+                }
+
             case InteractionObject.ObjectType.Fishing:
                 {
                     FishingObject fishing = (FishingObject)mInteractionObj;
@@ -252,7 +273,6 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else
                         {
-                            
                             UIManager.instance.SetSystemMessage("미끼 아이템이 부족합니다.");
                         }
                     }
@@ -262,7 +282,6 @@ public class PlayerMovement : MonoBehaviour
                         mAnimator.Play("FishingTree_1"); // 낚시대 당기기 
 
                         ActionCheck();
-
                     }
                     else
                     {
@@ -326,6 +345,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActionCheck()
     {
+        if (mInteractionObj.mType == InteractionObject.ObjectType.Logging)
+        {
+            LoggingObject logging = (LoggingObject)mInteractionObj;
+            logging.UpdateState();
+        }
+
+            if (mInteractionObj.mType == InteractionObject.ObjectType.Mining)
+        {
+           MiningObject mining = (MiningObject)mInteractionObj;
+            mining.UpdateState();
+
+        }
 
         if (mInteractionObj.mType == InteractionObject.ObjectType.Farming)
         {

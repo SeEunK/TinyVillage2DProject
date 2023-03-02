@@ -73,6 +73,43 @@ public class MainHUD: MonoBehaviour
         mImgAction.sprite = mIcoToolsSprites[6];
     }
 
+    public void UpdateLoggingActionButtonSprite(LoggingData.State state)
+    {
+        switch(state)
+        {
+            case LoggingData.State.Empty:
+                mBtnAction.SetActive(false);
+                break;
+
+            case LoggingData.State.Full:
+            case LoggingData.State.Half:
+                mImgAction.sprite = mIcoToolsSprites[4];
+                break;
+
+        }
+    }
+
+    public void UpdateMiningActionButtonSprite(MiningData.State state)
+    {
+        switch (state)
+        {
+            case MiningData.State.Empty:
+                // 빈 상태 -> 버튼 hide
+                mBtnAction.SetActive(false);
+               
+                break;
+
+            case MiningData.State.Full:
+            case MiningData.State.Half:
+
+                // 채광 가능 상태.
+                mBtnAction.GetComponent<Image>().color = Color.white;
+                mImgAction.sprite = mIcoToolsSprites[3];
+                break;
+        }
+    }
+
+
     public void UpdateFishingActionButtonSprite(FishingData.State state)
     {
         switch (state)

@@ -843,7 +843,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 945175291, guid: a94a83d759c1f9b4d805ecab6cfeb74c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 75a41e07436f18049bdba045c0f27c4d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6320,6 +6320,8 @@ MonoBehaviour:
   mFarmDataList: []
   mFishingDataList: []
   mZoneList: []
+  mMiningDataList: []
+  mLoggingDataList: []
   mItemDataList: []
   mGold: 0
 --- !u!4 &1046858294
@@ -7206,10 +7208,10 @@ MonoBehaviour:
   - {fileID: 663035381, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
   - {fileID: -678222535, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
   - {fileID: -1625613625, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
-  - {fileID: -678222535, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
-  - {fileID: -1625613625, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
+  - {fileID: -1297061636, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
+  - {fileID: 1786743696, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
   - {fileID: -1922218035, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
-  - {fileID: -1715780012, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
+  - {fileID: -991588200, guid: 0c060d5473e62494e87e7a8bb41f9ed4, type: 3}
   - {fileID: -1981235793, guid: 05a16e19498a3f34482394f9b02b491f, type: 3}
   mBtnAction: {fileID: 1347465730}
   mImgAction: {fileID: 289294275}
@@ -9679,7 +9681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1691991553, guid: a94a83d759c1f9b4d805ecab6cfeb74c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a20eb50572e872147a9ae1933644adaf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -103,6 +103,8 @@ public class QuestCell : MonoBehaviour
             case QuestData.QuestConditionType.MonsterKill: { return "[Hunter]"; }
             case QuestData.QuestConditionType.Fishing: { return "[Fisherman]"; }
             case QuestData.QuestConditionType.Farming: { return "[Farmer]"; }
+            case QuestData.QuestConditionType.Mining: { return "[Mining]"; }
+            case QuestData.QuestConditionType.Logging: { return "[Logging]"; }
         }
         return "Unknown";
     }

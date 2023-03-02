@@ -10,6 +10,8 @@ public class UserData : MonoBehaviour
     public List<FarmData> mFarmDataList = new List<FarmData>();
     public List<FishingData> mFishingDataList = new List<FishingData>();
     public List<ZoneData> mZoneList = new List<ZoneData>();
+    public List<MiningData> mMiningDataList = new List<MiningData>();
+    public List<LoggingData> mLoggingDataList = new List<LoggingData>();
 
     public List<ItemData> mItemDataList = new List<ItemData>();
 
@@ -62,14 +64,20 @@ public class UserData : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             mFarmDataList.Add(new FarmData());
+            
         }
 
         mFishingDataList.Add(new FishingData());
+        mMiningDataList.Add(new MiningData());
+        mLoggingDataList.Add(new LoggingData());
+
 
         for (int i = 0; i < 2; i++)
         {
             mZoneList.Add(new ZoneData());
         }
+
+        
     }
 
     public ItemData GetItemByID(int id)

@@ -9,7 +9,7 @@ public class FarmObject : InteractionObject
     public List<Sprite> mSprites = new List<Sprite>();
     public SpriteRenderer mRenderer;
 
-    public double mTimer = 0.0f;
+    public double mTimer = 0.0d;
     public double mTurm = 3.0d;
 
     public Image mImgWait = null;

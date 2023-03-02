@@ -105,6 +105,7 @@ public class QuestCell : MonoBehaviour
             case QuestData.QuestConditionType.Farming: { return "[Farmer]"; }
             case QuestData.QuestConditionType.Mining: { return "[Mining]"; }
             case QuestData.QuestConditionType.Logging: { return "[Logging]"; }
+            case QuestData.QuestConditionType.Gathering: { return "[Gathering]"; }
         }
         return "Unknown";
     }

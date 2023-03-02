@@ -7,11 +7,19 @@ public class UserData : MonoBehaviour
     public static UserData instance = null;
 
 
+    public const int FARM_OBJECT_MAX_COUNT = 6;
+    public const int FISHING_POINT_MAX_COUNT = 1;
+    public const int LOGGING_OBJECT_MAX_COUNT = 6;
+    public const int MINNING_OBJECT_MAX_COUNT = 6;
+    public const int GATHERING_OBJECT_MAX_COUNT = 2;
+    public const int ZONE_MAX_COUNT = 2;
+
     public List<FarmData> mFarmDataList = new List<FarmData>();
     public List<FishingData> mFishingDataList = new List<FishingData>();
     public List<ZoneData> mZoneList = new List<ZoneData>();
     public List<MiningData> mMiningDataList = new List<MiningData>();
     public List<LoggingData> mLoggingDataList = new List<LoggingData>();
+    public List<GatherData> mGatherDataList = new List<GatherData>();
 
     public List<ItemData> mItemDataList = new List<ItemData>();
 
@@ -61,18 +69,33 @@ public class UserData : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < FARM_OBJECT_MAX_COUNT; i++)
         {
             mFarmDataList.Add(new FarmData());
             
         }
 
-        mFishingDataList.Add(new FishingData());
-        mMiningDataList.Add(new MiningData());
-        mLoggingDataList.Add(new LoggingData());
+        for (int i = 0; i < FISHING_POINT_MAX_COUNT; i++)
+        {
+            mFishingDataList.Add(new FishingData());
+        }
 
+        for (int i = 0; i < MINNING_OBJECT_MAX_COUNT; i++)
+        {
+            mMiningDataList.Add(new MiningData());
+        }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < LOGGING_OBJECT_MAX_COUNT; i++)
+        {
+            mLoggingDataList.Add(new LoggingData());
+        }
+
+        for (int i = 0; i < GATHERING_OBJECT_MAX_COUNT; i++)
+        {
+            mGatherDataList.Add(new GatherData());
+        }
+
+        for (int i = 0; i < ZONE_MAX_COUNT; i++)
         {
             mZoneList.Add(new ZoneData());
         }

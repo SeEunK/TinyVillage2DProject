@@ -195,6 +195,16 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
 
+            case InteractionObject.ObjectType.Logging:
+                LoggingObject loggingObj = (LoggingObject)mInteractionObj;
+                break;
+
+
+            case InteractionObject.ObjectType.Gathering:
+                GatheringObject gatheringObj = (GatheringObject)mInteractionObj;
+                break;
+
+
         }
 
     }
@@ -208,6 +218,24 @@ public class PlayerMovement : MonoBehaviour
                 return;
 
             case InteractionObject.ObjectType.Gathering:
+                {
+                    GatheringObject gatheringObj = (GatheringObject)mInteractionObj;
+                    int index = gatheringObj.mIndex;
+                    GatherData.State state = UserData.instance.mGatherDataList[index].GetState();
+
+                    
+                    if(state == GatherData.State.Full)
+                    {
+                        mAnimator.Play("AxingTree"); // 채칩 애니메이션 추가해서 변경해주고
+                        ActionCheck();
+                    }
+                    else if (state == GatherData.State.Half)
+                    {
+                        mAnimator.Play("AxingTree"); // 열매없어도 벌목 가능하면 벌목하고.
+                        ActionCheck();
+                    }
+                    break;
+                }
 
             case InteractionObject.ObjectType.Npc:
                 ActionCheck();
@@ -345,6 +373,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActionCheck()
     {
+        if (mInteractionObj.mType == InteractionObject.ObjectType.Gathering)
+        {
+            GatheringObject gatheringObject = (GatheringObject)mInteractionObj;
+            gatheringObject.UpdateState();
+        }
+
         if (mInteractionObj.mType == InteractionObject.ObjectType.Logging)
         {
             LoggingObject logging = (LoggingObject)mInteractionObj;

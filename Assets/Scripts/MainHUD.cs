@@ -89,6 +89,37 @@ public class MainHUD: MonoBehaviour
         }
     }
 
+
+
+    public void UpdateGatheringActionButtonSprite(GatherData.State state)
+    {
+        switch (state)
+        {
+            case GatherData.State.None:
+                // 빈 상태 -> 버튼 hide
+                mBtnAction.SetActive(false);
+
+                break;
+
+            case GatherData.State.Full:
+                // 채집 가능 상태.
+                mBtnAction.GetComponent<Image>().color = Color.white;
+                mImgAction.sprite = mIcoToolsSprites[3];//채집은 손같은걸로 icon 추가해서 변경해주자
+                break;
+
+            case GatherData.State.Half:
+
+                //열매는 안열렸지만 벌목가능 상태
+                mBtnAction.GetComponent<Image>().color = Color.white;
+                mImgAction.sprite = mIcoToolsSprites[4]; 
+                break;
+        }
+    }
+
+
+
+
+
     public void UpdateMiningActionButtonSprite(MiningData.State state)
     {
         switch (state)

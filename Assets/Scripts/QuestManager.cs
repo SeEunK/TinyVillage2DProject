@@ -34,6 +34,7 @@ public class QuestManager : MonoBehaviour
         mQuestCounts.Add(QuestData.QuestConditionType.Farming, 0);
         mQuestCounts.Add(QuestData.QuestConditionType.Mining, 0);
         mQuestCounts.Add(QuestData.QuestConditionType.Logging, 0);
+        mQuestCounts.Add(QuestData.QuestConditionType.Gathering, 0);
 
         QuestTableCreate();
 
@@ -133,6 +134,24 @@ public class QuestManager : MonoBehaviour
         }
         mQuestData.Add(QuestData.QuestConditionType.Logging, LoggingQuest);
         // Logging quest ================================================================================
+
+
+        // Gathering quest ================================================================================
+        List<QuestData> gatheringQuest = new List<QuestData>();
+        {
+            QuestData quest = new QuestData("step 1. gathering 3 times", QuestData.QuestConditionType.Gathering, 3, QuestData.RewardType.Gold, null, 1000);
+            gatheringQuest.Add(quest);
+        }
+        {
+            QuestData quest = new QuestData("step 2. gathering 5 times", QuestData.QuestConditionType.Gathering, 5, QuestData.RewardType.Gold, null, 3000);
+            gatheringQuest.Add(quest);
+        }
+        {
+            QuestData quest = new QuestData("step 3. gathering 10 times", QuestData.QuestConditionType.Gathering, 10, QuestData.RewardType.Item, rewardItem, 1);
+            gatheringQuest.Add(quest);
+        }
+        mQuestData.Add(QuestData.QuestConditionType.Gathering, gatheringQuest);
+        // Gathering quest ================================================================================
     }
 
     public void AddAccCount(QuestData.QuestConditionType type, int count)

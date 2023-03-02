@@ -247,7 +247,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 129
-        y: 2
+        y: 3
         width: 16
         height: 16
       alignment: 0
@@ -272,7 +272,7 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -280,6 +280,27 @@ TextureImporter:
       bones: []
       spriteID: ecf25f29777aa284fafba6af5103dbcf
       internalID: -1981235793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: toolIcons_8
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 5
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8843b691be229a040b6cf0beb8a1c824
+      internalID: 1683505952
       vertices: []
       indices: 
       edges: []
@@ -302,6 +323,7 @@ TextureImporter:
       toolIcons_1: 1786743696
       toolIcons_6: -1715780012
       toolIcons_4: -1625613625
+      toolIcons_8: 1683505952
       toolIcons_3: -678222535
   spritePackingTag: 
   pSDRemoveMatte: 0

@@ -25,7 +25,7 @@ public class MiningObject : InteractionObject
         if (collision.CompareTag("Player"))
         {
             GameObject playerObject = collision.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             player.SetInteractionObject(this);
 
@@ -42,7 +42,7 @@ public class MiningObject : InteractionObject
         if (other.CompareTag("Player"))
         {
             GameObject playerObject = other.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             UIManager.instance.SetActionButton(false);
 
@@ -58,7 +58,7 @@ public class MiningObject : InteractionObject
         {
             Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
             Sprite itemIcon = itemImages[8];
-            ItemData getItem = new ItemData(8, "µπ∏Õ¿Ã", itemIcon, 99, 20);
+            ItemData getItem = new ItemData(8, "µπ∏Õ¿Ã", itemIcon, 99, 30);
             UserData.instance.AddItem(getItem);
 
             QuestManager.instance.AddAccCount(QuestData.QuestConditionType.Mining, 1);

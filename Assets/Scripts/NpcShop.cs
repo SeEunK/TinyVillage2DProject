@@ -55,8 +55,8 @@ public class NpcShop : MonoBehaviour
         mSellPanel.SetActive(false);
 
         mBuyPanel.SetActive(true);
-        UIManager.instance.GetInventory().SetState(Inventory.State.Buy);
-        UIManager.instance.GetInventory().Open();
+     
+        UIManager.instance.GetInventory().Open(Inventory.State.Buy);
     }
 
     public void OpenSellTab()
@@ -65,8 +65,8 @@ public class NpcShop : MonoBehaviour
         mTabButtonBuy.GetComponent<Image>().color = mUnSelectedColor;
         mBuyPanel.SetActive(false);
         mSellPanel.SetActive(true);
-        UIManager.instance.GetInventory().SetState(Inventory.State.Sell);
-        UIManager.instance.GetInventory().Open();
+     
+        UIManager.instance.GetInventory().Open(Inventory.State.Sell);
     }
 
 
@@ -94,24 +94,40 @@ public class NpcShop : MonoBehaviour
 
             ShopSlot slot = slotObject.GetComponent<ShopSlot>();
 
-            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
 
             // [임시] 수량제한 상품 세팅을 위해 
             if (i == 0)
             {
+                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
                 Sprite itemIcon = itemImages[2];
-                ItemData item = new ItemData(3, "사과", itemIcon, 99, 10);
+                ItemData item = new ItemData(3, "사과", itemIcon, 99, 10, 30);
 
                 ShopData shopData = new ShopData(i, item, 100, 10, ShopData.ProductType.QuantityLimit);
 
                 slot.SetSlot(i, shopData);
             }
+            else if(i == 1){
+                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/toolIcons");
+                Sprite itemIcon = itemImages[6];
+                ItemData item = new ItemData(10, "씨앗", itemIcon, 99, 100);
+
+                ShopData shopData = new ShopData(i, item, 500, 10, ShopData.ProductType.QuantityLimit);
+                slot.SetSlot(i, shopData);
+            }
+            else if (i == 2) { 
+                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
+                Sprite itemIcon = itemImages[16];
+                ItemData item = new ItemData(11, "미끼", itemIcon, 99, 50);
+                ShopData shopData = new ShopData(i, item, 200, 30, ShopData.ProductType.QuantityLimit);
+                slot.SetSlot(i, shopData);
+            }
             else
             {
+                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
                 Sprite itemIcon = itemImages[13];
-                ItemData item = new ItemData(2, "당근", itemIcon, 99, 5);
+                ItemData item = new ItemData(2, "당근", itemIcon, 99, 5, 10);
 
-                ShopData shopData = new ShopData(i, item, 900, -1, ShopData.ProductType.UnLimite);
+                ShopData shopData = new ShopData(i, item, 300, -1, ShopData.ProductType.UnLimite);
 
                 slot.SetSlot(i, shopData);
             }
@@ -210,7 +226,7 @@ public class NpcShop : MonoBehaviour
     {
         if(value == true)
         {
-            UIManager.instance.GetInventory().Open();
+            UIManager.instance.GetInventory().Open(Inventory.State.Buy);
         }
         else
         {

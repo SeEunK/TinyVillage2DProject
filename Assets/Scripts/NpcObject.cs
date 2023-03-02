@@ -31,7 +31,7 @@ public class NpcObject : InteractionObject
             mAnimator.SetBool("IsInteraction", true);
 
             GameObject playerObject = collision.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             player.SetInteractionObject(this);
             UIManager.instance.SetActionButton(true);
@@ -51,7 +51,7 @@ public class NpcObject : InteractionObject
             mAnimator.SetBool("IsMove", true);
 
             GameObject playerObject = other.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             UIManager.instance.SetActionButton(false);
             player.SetInteractionObject(null);

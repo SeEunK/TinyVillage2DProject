@@ -40,7 +40,7 @@ public class FishingObject : InteractionObject
         if (collision.CompareTag("Player"))
         {
             GameObject playerObject = collision.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             player.SetInteractionObject(this);
             UIManager.instance.SetActionButton(true);
@@ -55,7 +55,7 @@ public class FishingObject : InteractionObject
         if (other.CompareTag("Player"))
         {
             GameObject playerObject = other.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             UIManager.instance.SetActionButton(false);
             player.SetInteractionObject(null);
@@ -92,7 +92,7 @@ public class FishingObject : InteractionObject
 
             Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/fish");
             Sprite itemIcon = itemImages[4];
-            ItemData getItem = new ItemData(3, "작은 물고기", itemIcon, 99, 30);
+            ItemData getItem = new ItemData(5, "작은 물고기", itemIcon, 99, 30, -10);
             UserData.instance.AddItem(getItem);
 
             QuestManager.instance.AddAccCount(QuestData.QuestConditionType.Fishing, 1);
@@ -180,19 +180,19 @@ public class FishingObject : InteractionObject
                 Debug.Log("fish run");
                 Init();
 
-                if (PlayerMovement.Instance.HasNeedItem(11))
+                if (PlayerController.Instance.HasNeedItem(11))
                 {
-                    PlayerMovement.Instance.GetAnimator().SetBool("fishingFinish", false);
-                    PlayerMovement.Instance.GetAnimator().SetTrigger("fishingCancel");
+                    PlayerController.Instance.GetAnimator().SetBool("fishingFinish", false);
+                    PlayerController.Instance.GetAnimator().SetTrigger("fishingCancel");
                     UserData.instance.mFishingDataList[mIndex].SetState(FishingData.State.Start); // 놓쳐서 다시 시작 상태로 변경
                     
-                    PlayerMovement.Instance.GetAnimator().SetTrigger("fishingRetry");
+                    PlayerController.Instance.GetAnimator().SetTrigger("fishingRetry");
                     UpdateSprite();
                 }
                 else
                 {
-                    PlayerMovement.Instance.GetAnimator().SetTrigger("fishingCancel");
-                    PlayerMovement.Instance.GetAnimator().SetBool("fishingFinish", true);
+                    PlayerController.Instance.GetAnimator().SetTrigger("fishingCancel");
+                    PlayerController.Instance.GetAnimator().SetBool("fishingFinish", true);
                    
                     UIManager.instance.SetSystemMessage("미끼 아이템이 부족합니다.");
 

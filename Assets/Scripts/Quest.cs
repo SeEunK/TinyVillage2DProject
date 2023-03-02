@@ -23,7 +23,7 @@ public class Quest : MonoBehaviour
             GameObject cellObject = Instantiate(mQuestCell);
             RectTransform cellRect = cellObject.GetComponent<RectTransform>();
 
-            cellRect.SetParent(mQuestPopupContentArea.transform);
+            cellRect.SetParent(mQuestPopupContentArea.transform, false);
             cellObject.name = string.Format("questCell_{0}", i);
 
             QuestCell cell = cellObject.GetComponent<QuestCell>();

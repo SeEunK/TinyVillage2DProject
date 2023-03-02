@@ -25,7 +25,7 @@ public class GatheringObject : InteractionObject
         if (collision.CompareTag("Player"))
         {
             GameObject playerObject = collision.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             player.SetInteractionObject(this);
 
@@ -42,7 +42,7 @@ public class GatheringObject : InteractionObject
         if (other.CompareTag("Player"))
         {
             GameObject playerObject = other.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             UIManager.instance.SetActionButton(false);
 
@@ -56,9 +56,8 @@ public class GatheringObject : InteractionObject
     {
         if (UserData.instance.mGatherDataList[mIndex].GetState() == GatherData.State.Full)
         {
-            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
-            Sprite itemIcon = itemImages[8];
-            ItemData getItem = new ItemData(6, "喉风海府", itemIcon, 99, 20);
+            Sprite itemIcon = Resources.Load<Sprite>("Sprites/blueBerry");
+            ItemData getItem = new ItemData(6, "喉风海府", itemIcon, 99, 20, 20);
             UserData.instance.AddItem(getItem);
 
             QuestManager.instance.AddAccCount(QuestData.QuestConditionType.Gathering, 1);
@@ -68,8 +67,7 @@ public class GatheringObject : InteractionObject
 
         else if (UserData.instance.mGatherDataList[mIndex].GetState() == GatherData.State.Half)
         {
-            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
-            Sprite itemIcon = itemImages[18];
+            Sprite itemIcon = Resources.Load<Sprite>("Sprites/log");
             ItemData getItem = new ItemData(7, "唱公配阜", itemIcon, 99, 20);
             UserData.instance.AddItem(getItem);
 

@@ -35,7 +35,7 @@ public class FarmObject : InteractionObject
         if (collision.CompareTag("Player"))
         {
             GameObject playerObject = collision.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             player.SetInteractionObject(this);
 
@@ -51,7 +51,7 @@ public class FarmObject : InteractionObject
         if (other.CompareTag("Player"))
         {
             GameObject playerObject = other.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             UIManager.instance.SetActionButton(false);
 
@@ -73,9 +73,9 @@ public class FarmObject : InteractionObject
         }
         if (UserData.instance.mFarmDataList[mIndex].GetState() == FarmData.State.Done)
         {
-            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
-            Sprite itemIcon = itemImages[13];
-            ItemData getItem = new ItemData(1,"¹«", itemIcon,  99,20);
+            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/FarmCrops");
+            Sprite itemIcon = itemImages[22];
+            ItemData getItem = new ItemData(1,"¹«", itemIcon,  99,20, 10);
             UserData.instance.AddItem(getItem);
 
             QuestManager.instance.AddAccCount(QuestData.QuestConditionType.Farming, 1);

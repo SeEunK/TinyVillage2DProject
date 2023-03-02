@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     IEnumerator GameSceneLoadAsync()
     {
         //player 정보 수정
-        PlayerMovement.Instance.SetState(PlayerMovement.State.None);
+        PlayerController.Instance.SetState(PlayerController.State.None);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
         
@@ -50,19 +50,19 @@ public class GameManager : MonoBehaviour
         MonsterSpawner.Instance.SetPuse(false);
 
         //player 정보 수정
-        PlayerMovement.Instance.SetDirection(PlayerMovement.Direction.Down);
-        PlayerMovement.Instance.transform.position = new Vector3(5.0f, 2.9f, 0.0f);
-        PlayerMovement.Instance.SetState(PlayerMovement.State.Active);
+        PlayerController.Instance.SetDirection(PlayerController.Direction.Down);
+        PlayerController.Instance.transform.position = new Vector3(5.0f, 2.9f, 0.0f);
+        PlayerController.Instance.SetState(PlayerController.State.Active);
 
         // 카메라 fllow 설정
         GameObject camera = GameObject.FindGameObjectWithTag("Camera");
         CinemachineVirtualCamera cmvCamera = camera.GetComponent<CinemachineVirtualCamera>();
-        cmvCamera.Follow = PlayerMovement.Instance.transform;
+        cmvCamera.Follow = PlayerController.Instance.transform;
 
         
         // main hud UI활성화
         UIManager.instance.GetMainHud().SetInventoryButton(true);
-        UIManager.instance.GetMainHud().UpdatePlayerHpBar(PlayerMovement.Instance.GetHpCount(),PlayerMovement.Instance.GetMaxHp());
+        UIManager.instance.GetMainHud().UpdatePlayerHpBar(UserData.instance.GetHp(),UserData.instance.GetMaxHp());
         UIManager.instance.GetMainHud().UpdatePlayerGoldCount();
         UIManager.instance.GetMainHud().SetPlayerInfo(true);
         UIManager.instance.SetQuestButton(true);
@@ -72,15 +72,13 @@ public class GameManager : MonoBehaviour
 
     public void HouseSceneLoad()
     {
-    
-
         StartCoroutine(HouseSceneLoadAsync());
     }
 
     IEnumerator HouseSceneLoadAsync()
     {
         //player 정보 수정
-        PlayerMovement.Instance.SetState(PlayerMovement.State.None);
+        PlayerController.Instance.SetState(PlayerController.State.None);
 
 
         //활성화된 slime 전부 push
@@ -100,14 +98,14 @@ public class GameManager : MonoBehaviour
 
 
         //player 정보 수정
-        PlayerMovement.Instance.SetDirection(PlayerMovement.Direction.Up);
-        PlayerMovement.Instance.transform.position = new Vector3(1.0f, -5.0f, 0.0f);
-        PlayerMovement.Instance.SetState(PlayerMovement.State.Active);
+        PlayerController.Instance.SetDirection(PlayerController.Direction.Up);
+        PlayerController.Instance.transform.position = new Vector3(1.0f, -5.0f, 0.0f);
+        PlayerController.Instance.SetState(PlayerController.State.Active);
 
         // 카메라 fllow 설정
         GameObject camera = GameObject.FindGameObjectWithTag("Camera");
         CinemachineVirtualCamera cmvCamera = camera.GetComponent<CinemachineVirtualCamera>();
-        cmvCamera.Follow = PlayerMovement.Instance.transform;
+        cmvCamera.Follow = PlayerController.Instance.transform;
 
         UIManager.instance.GetMainHud().SetInventoryButton(true);
         UIManager.instance.SetPlayerInfo(true);

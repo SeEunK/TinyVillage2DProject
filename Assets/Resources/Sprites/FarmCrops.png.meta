@@ -579,27 +579,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FarmCrops_22
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 50
-        width: 13
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8af1ffe824d7cf24da841539a0e91cd8
-      internalID: 870660009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: FarmCrops_23
       rect:
         serializedVersion: 2
@@ -914,6 +893,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: FarmCrops_22
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 49
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4592db68ef42f9d439cbba451a356976
+      internalID: 1113569356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -932,7 +932,7 @@ TextureImporter:
       FarmCrops_7: 1307821506
       FarmCrops_31: 1053079996
       FarmCrops_30: 538968064
-      FarmCrops_11: -803987707
+      FarmCrops_28: -1528277015
       FarmCrops_16: -1608090384
       FarmCrops_24: 1753023650
       FarmCrops_0: 628254960
@@ -940,7 +940,7 @@ TextureImporter:
       FarmCrops_38: -515100775
       FarmCrops_33: -1542714938
       FarmCrops_10: 512220925
-      FarmCrops_22: 870660009
+      FarmCrops_22: 1113569356
       FarmCrops_12: 1333201936
       FarmCrops_3: -1846449037
       FarmCrops_29: 334554478
@@ -958,12 +958,12 @@ TextureImporter:
       FarmCrops_4: -1353111007
       FarmCrops_2: 1872254078
       FarmCrops_6: -235943043
-      FarmCrops_19: 2072064553
+      FarmCrops_11: -803987707
       FarmCrops_9: 260710330
       FarmCrops_26: 396906706
       FarmCrops_34: -1381280920
       FarmCrops_36: -1462798456
-      FarmCrops_28: -1528277015
+      FarmCrops_19: 2072064553
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

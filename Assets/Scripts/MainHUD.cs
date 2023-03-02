@@ -104,7 +104,7 @@ public class MainHUD: MonoBehaviour
             case GatherData.State.Full:
                 // 채집 가능 상태.
                 mBtnAction.GetComponent<Image>().color = Color.white;
-                mImgAction.sprite = mIcoToolsSprites[3];//채집은 손같은걸로 icon 추가해서 변경해주자
+                mImgAction.sprite = mIcoToolsSprites[8];
                 break;
 
             case GatherData.State.Half:
@@ -199,7 +199,7 @@ public class MainHUD: MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            PlayerMovement playerController = player.GetComponent<PlayerMovement>();
+            PlayerController playerController = player.GetComponent<PlayerController>();
             playerController.Interaction();
         }
         else
@@ -214,7 +214,7 @@ public class MainHUD: MonoBehaviour
     public void OpenInventory()
     {
         Inventory inven = UIManager.instance.mInventroy.GetComponent<Inventory>();
-        inven.Open();
+        inven.Open(Inventory.State.None);
 
     }
 

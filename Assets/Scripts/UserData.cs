@@ -25,6 +25,8 @@ public class UserData : MonoBehaviour
 
     [SerializeField]
     private int mGold = 0;
+    private int mHp = 0;
+    private int mMaxHp = 0;
 
     private void Awake()
     {
@@ -33,10 +35,11 @@ public class UserData : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             mGold = 1000000;
-
+            mMaxHp = 100;
+            mHp = mMaxHp;
             {// Å×½ºÆ®¿ë ¾¾¾Ñ Áö±Þ
-                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
-                Sprite itemIcon = itemImages[1];
+                Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/toolIcons");
+                Sprite itemIcon = itemImages[6];
                 ItemData getItem = new ItemData(10, "¾¾¾Ñ", itemIcon, 99, 100);
                 for (int i = 0; i < 5; i++)
                 {
@@ -115,6 +118,28 @@ public class UserData : MonoBehaviour
         return null;
     }
 
+    public int GetHp()
+    {
+        return mHp;
+    }
+    public void OnUpdateHp(int value)
+    {
+        if (mMaxHp < mHp + value)
+        {
+            value = mMaxHp - mHp;
+        }
+        else if (mHp - value < 0)
+        {
+            value = mHp;
+        }
+        mHp += value;
+            
+    }
+
+    public int GetMaxHp()
+    {
+        return mMaxHp;
+    }
     public int GetGold()
     {
         return mGold;

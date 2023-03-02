@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public static PlayerMovement Instance;
+    public static PlayerController Instance;
 
     public enum State { None, Active, Attack }
     public enum Direction { Left, Right, Up, Down }
@@ -29,8 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public ZoneData.Name mGoToZoneName = ZoneData.Name.Field;
 
 
-    public int mMaxHP = 0;
-    public int mHP = 0;
+  
 
     private void Awake()
     {
@@ -41,8 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
             mRigid = GetComponent<Rigidbody2D>();
             mAnimator = GetComponent<Animator>();
-            mMaxHP = 100;
-            mHP = mMaxHP;
+         
             
         }
         else
@@ -78,8 +76,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 SetDirection(Direction.Up);
             }
-            //mAnimator.SetFloat("X", mMovement.x);
-            //mAnimator.SetFloat("Y", mMovement.y);
+     
 
             mAnimator.SetBool("IsWalking", true);
 
@@ -105,10 +102,10 @@ public class PlayerMovement : MonoBehaviour
     
     public void OnDamege(int damege)
     {
-        mHP -= damege;
-        UIManager.instance.GetMainHud().UpdatePlayerHpBar(mHP, mMaxHP);
+        UserData.instance.OnUpdateHp(-damege);
+        UIManager.instance.GetMainHud().UpdatePlayerHpBar(UserData.instance.GetHp(), UserData.instance.GetMaxHp());
 
-        if(mHP<=0)
+        if(UserData.instance.GetHp() <= 0)
         {
             Debug.Log("player die");
         }
@@ -150,15 +147,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public int GetHpCount ()
-    {
-        return mHP;
-    }
-
-    public int GetMaxHp()
-    {
-        return mMaxHP;
-    }
 
 
 

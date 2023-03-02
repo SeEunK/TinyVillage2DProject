@@ -12,7 +12,9 @@ public class ItemData
     public int mMaxStackCount;
     public int mCount;
     public int mSellPrice;
-    public ItemData(int index, string name, Sprite image,  int MaxStackCount, int sellprice)
+    public int mHpValue;
+
+    public ItemData(int index, string name, Sprite image,  int MaxStackCount, int sellprice, int hpValue = 0)
     {
         mId = index; 
         mName = name; 
@@ -20,6 +22,7 @@ public class ItemData
         mMaxStackCount = MaxStackCount;
         mCount = 1;
         mSellPrice = sellprice;
+        mHpValue = hpValue;
     }
 
  

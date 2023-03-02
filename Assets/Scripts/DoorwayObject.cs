@@ -20,7 +20,7 @@ public class DoorwayObject : InteractionObject {
         if (collision.CompareTag("Player"))
         {
             GameObject playerObject = collision.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             player.SetInteractionObject(this);
             UIManager.instance.SetActionButton(true);
@@ -35,7 +35,7 @@ public class DoorwayObject : InteractionObject {
         if (other.CompareTag("Player"))
         {
             GameObject playerObject = other.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             UIManager.instance.SetActionButton(false);
             player.SetInteractionObject(null);

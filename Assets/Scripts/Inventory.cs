@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         mHorizontalSlotCount = mInventoryGridLayoutGroup.constraintCount;
-        mVerticalSlotCount = 4;
+        mVerticalSlotCount = 6;
         mState = State.None;
         mIsAscending = false;
         UpdateSortButton();
@@ -151,14 +151,16 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void Open()
+    public void Open(State state)
     {
+        SetState(state);
         UpdateInventoryList();
         this.gameObject.SetActive(true);
     }
 
     public void CloseInventory()
     {
+        SetState(State.None);
         this.gameObject.SetActive(false);
         //UIManager.instance.mInventroy.SetActive(false);
         UIManager.instance.SetItemInfoPopup(false);

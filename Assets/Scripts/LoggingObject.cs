@@ -27,7 +27,7 @@ public class LoggingObject : InteractionObject
         if (collision.CompareTag("Player"))
         {
             GameObject playerObject = collision.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             player.SetInteractionObject(this);
 
@@ -44,7 +44,7 @@ public class LoggingObject : InteractionObject
         if (other.CompareTag("Player"))
         {
             GameObject playerObject = other.gameObject;
-            PlayerMovement player = playerObject.GetComponent<PlayerMovement>();
+            PlayerController player = playerObject.GetComponent<PlayerController>();
 
             UIManager.instance.SetActionButton(false);
 
@@ -58,8 +58,8 @@ public class LoggingObject : InteractionObject
     {
         if (UserData.instance.mLoggingDataList[mIndex].GetState() != LoggingData.State.Empty)
         {
-            Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
-            Sprite itemIcon = itemImages[18];
+            
+            Sprite itemIcon = Resources.Load<Sprite>("Sprites/log");
             ItemData getItem = new ItemData(7, "나무토막", itemIcon, 99, 20);
             UserData.instance.AddItem(getItem);
 

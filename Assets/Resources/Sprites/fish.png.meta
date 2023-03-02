@@ -120,12 +120,12 @@ TextureImporter:
       name: fish_0
       rect:
         serializedVersion: 2
-        x: 59
+        x: 57
         y: 309
-        width: 155
-        height: 156
+        width: 157
+        height: 157
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -141,12 +141,12 @@ TextureImporter:
       name: fish_1
       rect:
         serializedVersion: 2
-        x: 290
+        x: 286
         y: 302
-        width: 147
-        height: 148
+        width: 157
+        height: 157
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -162,12 +162,12 @@ TextureImporter:
       name: fish_2
       rect:
         serializedVersion: 2
-        x: 63
-        y: 166
-        width: 147
-        height: 131
+        x: 59
+        y: 153
+        width: 157
+        height: 157
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -183,12 +183,12 @@ TextureImporter:
       name: fish_3
       rect:
         serializedVersion: 2
-        x: 294
-        y: 181
-        width: 140
-        height: 94
+        x: 287
+        y: 146
+        width: 157
+        height: 157
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -204,12 +204,12 @@ TextureImporter:
       name: fish_5
       rect:
         serializedVersion: 2
-        x: 82
-        y: 46
-        width: 109
-        height: 86
+        x: 59
+        y: 6
+        width: 157
+        height: 157
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -226,11 +226,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 286
-        y: 35
-        width: 155
-        height: 109
+        y: 7
+        width: 157
+        height: 157
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

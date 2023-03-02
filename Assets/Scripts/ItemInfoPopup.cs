@@ -45,8 +45,15 @@ public class ItemInfoPopup : MonoBehaviour
         switch (mType)
         {
             case PopupType.Inven:
-                mTxtBtnText.text = "USE";
-                mBtnObj.SetActive(true);
+                if (item.mHpValue != 0)
+                {
+                    mTxtBtnText.text = "USE";
+                    mBtnObj.SetActive(true);
+                }
+                else 
+                { 
+                    mBtnObj.SetActive(false); 
+                }
                 break;
 
             case PopupType.Shop:
@@ -68,8 +75,21 @@ public class ItemInfoPopup : MonoBehaviour
         {
             case PopupType.Inven:
                 {
-                    // 사용 효과 item 에 넣어두고 효과 적용필요
+                    // 사용 효과 반영 (일단, hp 증감 효과만 존재) 
+                    UserData.instance.OnUpdateHp(mItem.mHpValue);
 
+                    // main hud 갱신
+                    UIManager.instance.GetMainHud().UpdatePlayerHpBar(UserData.instance.GetHp(), UserData.instance.GetMaxHp());
+
+                    // 시스템 메시지 출력
+                    if (mItem.mHpValue > 0)
+                    {
+                        UIManager.instance.SetSystemMessage(string.Format("{0} 아이템을 사용하여, HP가 {1} 만큼 회복되었습니다.", mItem.mName, mItem.mHpValue));
+                    }
+                    else
+                    {
+                        UIManager.instance.SetSystemMessage(string.Format("{0} 아이템을 사용하여, HP가 {1} 만큼 차감되었습니다.", mItem.mName, mItem.mHpValue));
+                    }
 
                     // 아이템 차감
                     UserData.instance.RemoveItemByItemIndex(mItem.GetID());
@@ -85,6 +105,12 @@ public class ItemInfoPopup : MonoBehaviour
                     }
                     // 인벤토리 갱신
                     UIManager.instance.GetInventory().UpdateInventoryList();
+
+                    // HP가 
+                    if (UserData.instance.GetHp() <= 0)
+                    {
+                        Debug.Log("player die");
+                    }
                 }
 
                 break;

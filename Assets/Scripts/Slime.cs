@@ -231,7 +231,7 @@ public class Slime : Enemy
         }
         if (Vector3.Distance(mTarget.position, transform.position) < 1.0f)
         {
-            mTarget.GetComponent<PlayerMovement>().OnDamege(mBaseAttack);
+            mTarget.GetComponent<PlayerController>().OnDamege(mBaseAttack);
         }
     }
 
@@ -281,7 +281,7 @@ public class Slime : Enemy
 
         Sprite[] itemImages = Resources.LoadAll<Sprite>("Sprites/Icon");
         Sprite itemIcon = itemImages[4];
-        ItemData getItem = new ItemData(4, "초록색 이파리", itemIcon, 99, 30);
+        ItemData getItem = new ItemData(4, "초록색 이파리", itemIcon, 99, 30,5);
         UserData.instance.AddItem(getItem);
 
     }

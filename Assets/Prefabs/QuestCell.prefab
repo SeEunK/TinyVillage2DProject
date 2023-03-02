@@ -718,7 +718,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 440, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1025155190844886821
 CanvasRenderer:
@@ -787,6 +787,7 @@ MonoBehaviour:
       mImage: {fileID: 0}
       mMaxStackCount: 0
       mCount: 0
+      mSellPrice: 0
     mReawardCount: 0
     mIsRewarded: 0
 --- !u!1 &1025155190955462335
